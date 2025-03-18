@@ -40,7 +40,7 @@ textInput("intro_question", "What do you already know about decision modeling?",
 
 ---
 
-## **1. The Need for Decision Modeling in Agroecology**
+## **1. Decision Modeling in Agroecology**
 
 - **Application of decision modeling in agroecology**
 - **The role of expert knowledge**
@@ -548,7 +548,7 @@ textInput("feedback", "Share your key takeaways:", placeholder="Write your refle
 - Apply Decision Analysis to your own research
 - Continue refining expert-elicited models
 
-Here is an open space for running your scripts. 
+Thanks for following this tutorial. As thanks, here is an open space for running your scripts. 
 
 ```{r blank, exercise=TRUE}
 
