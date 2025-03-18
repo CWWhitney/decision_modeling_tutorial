@@ -558,5 +558,10 @@ Thanks for following this tutorial. As thanks, here is an open space for running
 
 Whitney, C, K Shepherd, and E Luedeling. “Decision Analysis Methods Guide; Agricultural Policy for Nutrition.” World Agroforestry (ICRAF) Working Paper series, no. 275 (2018): 40. http://dx.doi.org/10.5716/WP18001.PDF.
 
+Whitney, Cory, Denis Lanzanova, Caroline Muchiri, Keith D. Shepherd, Todd S. Rosenstock, Michael Krawinkel, John R. S. Tabuti, and Eike Luedeling. “Probabilistic Decision Tools for Determining Impacts of Agricultural Development Policy on Household Nutrition.” Earth’s Future 6, no. 3 (2018): 359–72. https://doi.org/10.1002/2017EF000765.
+
+Whitney, Cory, Gordon O’Brien, Vuyisile Dlamini, Ikhothatseng Jacob Greffiths, Chris Dickens, and Eike Luedeling. “Balancing Ecosystem Sustainability and Irrigated Smallholder Agriculture: A Modeling Approach for Water Resource Management.” Journal of Hydrology 651 (April 2025): 132560. https://doi.org/10.1016/j.jhydrol.2024.132560.
+
+Whitney, Cory, Lisa Biber-Freudenberger, and Eike Luedeling. “Decision Analytical Methods for Assessing the Efficacy of Agroecology Interventions.” CABI Agriculture and Bioscience 4, no. 1 (2023): 9. https://doi.org/10.1186/s43170-023-00151-9.
 
 
