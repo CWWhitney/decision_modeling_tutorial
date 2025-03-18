@@ -1,6 +1,6 @@
 # set.seed(42)
 # Monte Carlo Simulation
-num_simulations <- 1000000
+num_simulations <- 1000
 
 # Define ranges per ha per year Euro
 # lower and upper
@@ -16,12 +16,6 @@ apple_costs <- runif(n = num_simulations,
                      max = apple_costs_range[2])
 
 apple_profits <- apple_income - apple_costs
-
-hist(apple_profits)
-
-abline(v = quantile(apple_profits, 
-                    c(0.1, 0.5, 0.9), 
-                    lwd = 10)) # lwd = line width
 
 # Add sheep to the horticulture system 
 # Now it is silvopastoral 
