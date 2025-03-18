@@ -8,8 +8,17 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(decisionSupport)
+library(ggplot2)
+library(learnr)
+library(shiny)
+library(DiagrammeR)
+
 source("functions/monte_carlo.R")
 source("functions/apples_sheep_in_class.R")
+source("functions/apple_sheep_pareto.R")
+
 ```
 
 # **Introduction**
@@ -69,6 +78,8 @@ Share a link of a graph you build in [Loopy](https://ncase.me/loopy/) by [Explor
 
 ### **Option 2: Upload a Hand-Drawn Model**
 
+Sketch out a decision model on a piece of paper and share with us.
+
 ```{r upload_model, echo=FALSE}
 fileInput("model_upload", "Upload your decision model (optional)", accept = c("image/png", "image/jpeg"))
 ```
@@ -77,101 +88,77 @@ fileInput("model_upload", "Upload your decision model (optional)", accept = c("i
 
 ## **4. Implementing the Apple-Sheep Monte Carlo Model**
 
-Now for a very simple **Monte Carlo Simulation** in R. We will analyze a **decision**. The choice of a farmer to start agroforestry (apple trees + sheep) or maintain a treeless sheep system. Use `set.seed` and change the number of simulations to 1000
+Now for a very simple **Monte Carlo Simulation** in R. We will analyze a **decision**. The choice of a farmer to start agroforestry (apple trees + sheep) or maintain a treeless sheep system. Use `set.seed` and change the number of simulations to 1000.
 
-```{r apples_sheep_in_class, exercise=TRUE}
+```{r apples_model, exercise=TRUE}
 
 # set.seed(42)
 num_simulations <- 100
 
 # Define ranges per ha per year Euro
 # lower and upper
-apple_income_range <- c(3000, 60000)
-apple_costs_range <- c(15000, 30000)
-
 apple_income <- runif(n = num_simulations, 
-                      min = apple_income_range[1], 
-                      max = apple_income_range[2])
+                      min = 3000, 
+                      max = 60000)
 
 apple_costs <- runif(n = num_simulations, 
-                      min = apple_costs_range[1], 
-                     max = apple_costs_range[2])
+                      min = 15000, 
+                     max = 30000)
 
 apple_profits <- apple_income - apple_costs
-
-hist(apple_profits)
-
-abline(v = quantile(apple_profits, 
-                    c(0.1, 0.5, 0.9), 
-                    lwd = 10)) # lwd = line width
-
-# Add sheep to the horticulture system 
-# Now it is silvopastoral 
-
-# Euro per ha per year
-sheep_income_range <- c(2000, 5000)
-sheep_costs_range <- c(1000, 2500)
-
-sheep_income <- runif(n = num_simulations, 
-                      min = sheep_income_range[1], 
-                      max = sheep_income_range[2])
-
-sheep_costs <- runif(n = num_simulations, 
-                     min = sheep_costs_range[1], 
-                     max = sheep_costs_range[2])
-
-sheep_profits <- sheep_income - sheep_costs
-
-total_profits <- apple_profits + sheep_profits
 ```
 
-```{r apples_sheep_in_class-solution}
+```{r apples_model-solution}
 
 set.seed(42)
 num_simulations <- 1000
 
 # Define ranges per ha per year Euro
 # lower and upper
-apple_income_range <- c(3000, 60000)
-apple_costs_range <- c(15000, 30000)
-
 apple_income <- runif(n = num_simulations, 
-                      min = apple_income_range[1], 
-                      max = apple_income_range[2])
+                      min = 3000, 
+                      max = 60000)
 
 apple_costs <- runif(n = num_simulations, 
-                      min = apple_costs_range[1], 
-                     max = apple_costs_range[2])
+                      min = 15000, 
+                     max = 30000)
 
 apple_profits <- apple_income - apple_costs
+```
 
-hist(apple_profits)
+Add sheep to the horticulture system. So we can judge the relative benefits of transition to a silvopastoral agroforestry system. Add the sheep and apple profits as a last step in the function.
 
-abline(v = quantile(apple_profits, 
-                    c(0.1, 0.5, 0.9), 
-                    lwd = 10)) # lwd = line width
-
-# Add sheep to the horticulture system 
-# Now it is silvopastoral 
+```{r sheep_model, exercise=TRUE}
 
 # Euro per ha per year
-sheep_income_range <- c(2000, 5000)
-sheep_costs_range <- c(1000, 2500)
-
 sheep_income <- runif(n = num_simulations, 
-                      min = sheep_income_range[1], 
-                      max = sheep_income_range[2])
+                      min = 2000, 
+                      max = 5000)
 
 sheep_costs <- runif(n = num_simulations, 
-                     min = sheep_costs_range[1], 
-                     max = sheep_costs_range[2])
+                     min = 1000, 
+                     max = 2500)
+
+sheep_profits <- sheep_income - sheep_costs
+```
+
+```{r sheep_model-solution}
+
+# Euro per ha per year
+sheep_income <- runif(n = num_simulations, 
+                      min = 2000, 
+                      max = 5000)
+
+sheep_costs <- runif(n = num_simulations, 
+                     min = 1000, 
+                     max = 2500)
 
 sheep_profits <- sheep_income - sheep_costs
 
 total_profits <- apple_profits + sheep_profits
 ```
 
-Plot a histogram of the model. Change the color of the apple_profits to grey. 
+Plot a histogram of the profits. Change the color of the apple_profits to grey. 
 
 ```{r plot_profits_overlay, exercise=TRUE}
 hist(total_profits, col = "white")
@@ -187,144 +174,288 @@ hist(sheep_profits, add = TRUE, col = "black")
 
 ---
 
-## Let's build a similar model with the `decisionSupport` package
+## **5. Pareto-Optimality)**
 
-### **Define Input Estimates**
+Now we will calcualte PAreto-Optimality. We will use the concept of the Pareto front to find the best trade-offs between two competing objectives. We can learn which solutions are *optimal* (better in at least one way, without being worse in another) and which solutions are *dominated* (we could improve at least one objective without making the other worse).
 
-Adjust these as you see fit. The lower bounds could be lower for example. 
+First we need to increase the model complexity a little by adding management options. We add stocking density (sheep per hectare), tree density (trees per hectare), proportion of tree area, and proportion of sheep area (1 - proportion_tree_area). Adjust these numbers to reflect your best estimate.
 
-```{r apple_sheep_estimates, exercise=TRUE}
-input_estimates <- data.frame(
-  variable = c("sheep_income", "sheep_cost", "apple_income", "apple_cost", "discount_rate"),
-  lower = c(3000, 1000, 30000, 15000, 10),
-  median = NA,
-  upper = c(5000, 2500, 60000, 30000, 10),
-  distribution = c("posnorm", "posnorm", "posnorm", "posnorm", "const"),
-  label = c("Income from sheep (euro/year)", "Cost of sheep (euro/year)", "Income from apple (euro/year)", "Cost of apple (euro/year)", "Discount Rate")
-)
+```{r management_variables, exercise=TRUE}
+
+# Define management variables per hectare
+max_stocking_density <- 20  # Max sheep per ha before overgrazing effects occur
+stocking_density <- runif(num_simulations, min = 5, max = max_stocking_density)
+
+max_tree_density <- 500   # Maximum trees per hectare
+tree_density <- runif(num_simulations, min = 50, max = max_tree_density)
+
+# Define proportion of tree area vs. sheep area
+proportion_tree_area <- runif(num_simulations, min = 0.2, max = 0.8)
+proportion_sheep_area <- 1 - proportion_tree_area  # Remaining area for sheep
 ```
 
-```{r apple_sheep_estimates-solution}
-input_estimates <- data.frame(
-  variable = c("sheep_income", "sheep_cost", "apple_income", "apple_cost", "discount_rate"),
-  lower = c(300, 100, 3000, 1500, 1),
-  median = NA,
-  upper = c(5000, 2500, 60000, 30000, 10),
-  distribution = c("posnorm", "posnorm", "posnorm", "posnorm", "const"),
-  label = c("Income from sheep (euro/year)", "Cost of sheep (euro/year)", "Income from apple (euro/year)", "Cost of apple (euro/year)", "Discount Rate")
-)
+```{r management_variables-solution}
+
+# Define management variables per hectare
+max_stocking_density <- 40  # Max sheep per ha before overgrazing effects occur
+stocking_density <- runif(num_simulations, min = 5, max = max_stocking_density)
+
+max_tree_density <- 200   # Maximum trees per hectare
+tree_density <- runif(num_simulations, min = 50, max = max_tree_density)
+
+# Define proportion of tree area vs. sheep area
+proportion_tree_area <- runif(num_simulations, min = 0.2, max = 0.8)
+proportion_sheep_area <- 1 - proportion_tree_area  # Remaining area for sheep
+
+total_profits_agroforestry <- apple_profits + (sheep_profits * proportion_sheep_area)
+total_profits_treeless <- sheep_profits  # No tree component in treeless system
 ```
 
-### **Build the Decision Model Function**
+Adjust these biodiversity numbers to reflect your best estimate. For example, depending on the ecosystem, each tree likely adds far fewer species and each sheep likely has far less of a negative impact. 
 
-Adjust as you see fit. Add the income from agroforestry `AF_income` to the return for example.
+```{r biodiversity_variables, exercise=TRUE}
 
-```{r apple_sheep_model_function, exercise=TRUE}
-model_function <- function() {
-  AF_income <- sheep_income + apple_income
-  AF_cost <- sheep_cost + apple_cost
-  AF_final_result <- AF_income - AF_cost
-  sheep_only <- sheep_income - sheep_cost
-  Decision_benefit <- AF_final_result - sheep_only
-  
-  AF_NPV <- discount(AF_final_result, discount_rate = discount_rate, calculate_NPV = TRUE)
-  NPV_sheep_only <- discount(sheep_only, discount_rate = discount_rate, calculate_NPV = TRUE)
-  NPV_decision <- discount(Decision_benefit, discount_rate = discount_rate, calculate_NPV = TRUE)
-  
-  return(list(
-    NPV_Agroforestry_System = AF_NPV,
-    NPV_Treeless_System = NPV_sheep_only,
-    NPV_decision = NPV_decision
-  ))
+# Define species richness and grazing impact factors per hectare
+species_richness_per_tree <- 0.05  # Each tree adds 0.05 species per ha
+species_loss_per_sheep <- 0.02  # Each sheep reduces 0.02 species per ha
+
+# Calculate biodiversity per ha
+tree_species_richness <- tree_density * species_richness_per_tree
+grazing_species_loss <- stocking_density * species_loss_per_sheep
+
+# Compute biodiversity outcomes per ha
+biodiversity_agroforestry <- tree_species_richness - grazing_species_loss
+biodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect
+
+# Calculate difference (decision impact of trees)
+# measures the financial difference when switching to trees
+total_profits <- total_profits_agroforestry - total_profits_treeless
+
+# Calculate difference (decision impact of trees on biodiversity)
+# measures the net gain/loss in biodiversity from switching to trees
+biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless
+
+# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
+biodiversity_value_per_species <- 500  # Assume each additional species is worth €500
+
+# Compute a combined utility function
+utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)
+```
+
+```{r biodiversity_variables-solution}
+
+# Define species richness and grazing impact factors per hectare
+species_richness_per_tree <- 0.01  # Each tree adds 0.001 species per ha
+species_loss_per_sheep <- 0.001  # Each sheep reduces 0.001 species per ha
+
+# Calculate biodiversity per ha
+tree_species_richness <- tree_density * species_richness_per_tree
+grazing_species_loss <- stocking_density * species_loss_per_sheep
+
+# Compute biodiversity outcomes per ha
+biodiversity_agroforestry <- tree_species_richness - grazing_species_loss
+biodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect
+
+# Calculate difference (decision impact of trees)
+# measures the financial difference when switching to trees
+total_profits <- total_profits_agroforestry - total_profits_treeless
+
+# Calculate difference (decision impact of trees on biodiversity)
+# measures the net gain/loss in biodiversity from switching to trees
+biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless
+
+# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
+biodiversity_value_per_species <- 500  # Assume each additional species is worth €500
+
+# Compute a combined utility function
+utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)
+```
+
+For the Pareto front plot we will first add the data together, store results in dataframe and plot a scatter plot. Change the color of the points in the scatter plot to green. 
+
+```{r results_data, exercise=TRUE}
+
+results <- data.frame(
+  total_profits,
+  biodiversity_impact
+)
+
+# Scatter plot
+plot(results$biodiversity_impact, results$total_profits,
+     col = "blue", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+```
+
+```{r results_data-solution}
+
+results <- data.frame(
+  total_profits,
+  biodiversity_impact
+)
+
+# Scatter plot
+plot(results$biodiversity_impact, results$total_profits,
+     col = "green", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+```
+
+Now we can look for the non-dominated points where no other solution is better in both biodiversity and total profits. A point (biodiversity, profit) is Pareto-optimal if no other point has higher biodiversity and higher profits. Change the color of the points to blue.
+
+```{r pareto_points, exercise=TRUE}
+
+# Sort results by biodiversity impact
+results <- results[order(results$biodiversity_impact, decreasing = TRUE),]
+
+# Initialize Pareto front
+pareto_front <- results[1, ]  # Start with the first point
+
+# Loop through sorted results and keep only non-dominated points
+for (i in 2:nrow(results)) {
+  if (results$total_profits[i] > tail(pareto_front$total_profits, 1)) {
+    pareto_front <- rbind(pareto_front, results[i, ])
+  }
 }
+
+# Plot all points
+plot(results$biodiversity_impact, results$total_profits,
+     col = "green", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+
+# Highlight Pareto front points
+points(pareto_front$biodiversity_impact, pareto_front$total_profits,
+       col = "red", pch = 19, type = "o", lwd = 2)
 ```
 
-```{r apple_sheep_model_function-solution}
-model_function <- function() {
-  AF_income <- sheep_income + apple_income
-  AF_cost <- sheep_cost + apple_cost
-  AF_final_result <- AF_income - AF_cost
-  sheep_only <- sheep_income - sheep_cost
-  Decision_benefit <- AF_final_result - sheep_only
-  
-  AF_NPV <- discount(AF_final_result, discount_rate = discount_rate, calculate_NPV = TRUE)
-  NPV_sheep_only <- discount(sheep_only, discount_rate = discount_rate, calculate_NPV = TRUE)
-  NPV_decision <- discount(Decision_benefit, discount_rate = discount_rate, calculate_NPV = TRUE)
-  
-  return(list(
-    NPV_Agroforestry_System = AF_NPV,
-    NPV_Treeless_System = NPV_sheep_only,
-    NPV_decision = NPV_decision, 
-    AF_income = AF_income
-  ))
+```{r pareto_points-solution}
+
+# Sort results by biodiversity impact
+results <- results[order(results$biodiversity_impact, decreasing = TRUE),]
+
+# Initialize Pareto front
+pareto_front <- results[1, ]  # Start with the first point
+
+# Loop through sorted results and keep only non-dominated points
+for (i in 2:nrow(results)) {
+  if (results$total_profits[i] > tail(pareto_front$total_profits, 1)) {
+    pareto_front <- rbind(pareto_front, results[i, ])
+  }
 }
+
+# Plot all points
+plot(results$biodiversity_impact, results$total_profits,
+     col = "green", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+
+# Highlight Pareto front points
+points(pareto_front$biodiversity_impact, pareto_front$total_profits,
+       col = "blue", pch = 19, type = "o", lwd = 2)
 ```
 
-### **Run the Monte Carlo Simulation**
+Now we can zoom in on the Pareto-optimal points and examine the conditions for key operational variables we calculated earlier.
 
-Adjust the number of simulations to `1000`. 
+```{r pareto_conditions, exercise=TRUE}
 
-```{r apple_sheep_mc, exercise=TRUE}
-apple_sheep_mc_simulation <- mcSimulation(
-  estimate = as.estimate(input_estimates),
-  model_function = model_function,
-  numberOfModelRuns = 100,
-  functionSyntax = "plainNames"
-)
+# Extract operational conditions for Pareto-optimal points
+pareto_conditions <- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &
+                               results$total_profits %in% pareto_front$total_profits,]
+
+# Merge with original dataset to include operational variables
+pareto_conditions <- merge(pareto_conditions, data.frame(
+  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),
+  by = c("biodiversity_impact", "total_profits"))
+
+# Show Pareto-optimal conditions
+print(pareto_conditions)
 ```
 
-```{r apple_sheep_mc-solution}
-apple_sheep_mc_simulation <- mcSimulation(
-  estimate = as.estimate(input_estimates),
-  model_function = model_function,
-  numberOfModelRuns = 1000,
-  functionSyntax = "plainNames"
+```{r pareto_conditions-solution}
+
+# Extract operational conditions for Pareto-optimal points
+pareto_conditions <- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &
+                               results$total_profits %in% pareto_front$total_profits,]
+
+# Merge with original dataset to include operational variables
+pareto_conditions <- merge(pareto_conditions, data.frame(
+  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),
+  by = c("biodiversity_impact", "total_profits"))
+
+# Show Pareto-optimal conditions
+print(pareto_conditions)
+```
+
+Finally we can plot the Pareto. Make the color of the points blue.
+
+```{r plot_pareto, exercise=TRUE}
+# Determine dynamic position based on plot coordinates
+text_positions <- ifelse(
+  pareto_front$biodiversity_impact > median(pareto_front$biodiversity_impact), 2, 4
 )
+
+# Adjust for very high or low points
+text_positions <- ifelse(
+  pareto_front$total_profits > quantile(pareto_front$total_profits, 0.75), 1, text_positions
+)
+text_positions <- ifelse(
+  pareto_front$total_profits < quantile(pareto_front$total_profits, 0.25), 3, text_positions
+)
+
+# Plot Pareto front
+plot(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     col = "red", pch = 19, type = "o", lwd = 2,
+     xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+
+# Add footnote at the bottom
+mtext("S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area", 
+      side = 1, line = 4, cex = 0.8)
+
+# Create multi-line labels with line breaks
+labels <- paste0("S:", round(pareto_conditions$stocking_density, 1), "\n",
+                 "T:", round(pareto_conditions$tree_density, 1), "\n",
+                 "P:", round(pareto_conditions$proportion_tree_area, 2))
+
+# Annotate with dynamically positioned text
+text(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     labels = labels, pos = text_positions, cex = 0.8)
+```
+
+```{r plot_pareto-solution}
+# Determine dynamic position based on plot coordinates
+text_positions <- ifelse(
+  pareto_front$biodiversity_impact > median(pareto_front$biodiversity_impact), 2, 4
+)
+
+# Adjust for very high or low points
+text_positions <- ifelse(
+  pareto_front$total_profits > quantile(pareto_front$total_profits, 0.75), 1, text_positions
+)
+text_positions <- ifelse(
+  pareto_front$total_profits < quantile(pareto_front$total_profits, 0.25), 3, text_positions
+)
+
+# Plot Pareto front
+plot(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     col = "blue", pch = 19, type = "o", lwd = 2,
+     xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+
+# Add footnote at the bottom
+mtext("S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area", 
+      side = 1, line = 4, cex = 0.8)
+
+# Create multi-line labels with line breaks
+labels <- paste0("S:", round(pareto_conditions$stocking_density, 1), "\n",
+                 "T:", round(pareto_conditions$tree_density, 1), "\n",
+                 "P:", round(pareto_conditions$proportion_tree_area, 2))
+
+# Annotate with dynamically positioned text
+text(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     labels = labels, pos = text_positions, cex = 0.8)
 ```
 
 ---
 
-## **5. Expert Knowledge & Validation (EVPI & Pareto-Optimality)**
-
-### **Expected Value of Perfect Information (EVPI)**
-
-```{r evpi_calc, exercise=TRUE}
-mcSimulation_table <- data.frame(apple_sheep_mc_simulation$x, apple_sheep_mc_simulation$y[3])
-evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = "NPV_decision")
-evpi
-```
-
-```{r evpi_calc-solution}
-mcSimulation_table <- data.frame(apple_sheep_mc_simulation$x, apple_sheep_mc_simulation$y[3])
-evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = "NPV_decision")
-evpi
-```
-
-### **Trade-Off Analysis Using Pareto-Optimality**
-
-```{r pareto_analysis, exercise=TRUE}
-decision1 <- apple_sheep_mc_simulation$y$NPV_Agroforestry_System
-decision2 <- apple_sheep_mc_simulation$y$NPV_Treeless_System
-
-ggplot(data.frame(decision1, decision2), aes(x=decision1, y=decision2)) +
-  geom_point(alpha=0.2, color="blue") +
-  labs(title="Pareto Front: Agroforestry vs Treeless System",
-       x="Agroforestry System (NPV)", y="Treeless System (NPV)")
-```
-
-```{r pareto_analysis-solution}
-decision1 <- apple_sheep_mc_simulation$y$NPV_Agroforestry_System
-decision2 <- apple_sheep_mc_simulation$y$NPV_Treeless_System
-
-ggplot(data.frame(decision1, decision2), aes(x=decision1, y=decision2)) +
-  geom_point(alpha=0.2, color="blue") +
-  labs(title="Pareto Front: Agroforestry vs Treeless System",
-       x="Agroforestry System (NPV)", y="Treeless System (NPV)")
-```
-
----
-
-## **6. Final Reflection**
+## **7. Final Reflection**
 
 - What insights did you gain from this tutorial?
 - How would you improve your decision model?
@@ -338,7 +469,6 @@ textInput("feedback", "Share your key takeaways:", placeholder="Write your refle
 
 ## **Next Steps**
 
-- Explore the `decisionSupport` package further
 - Apply Monte Carlo simulations to your own research
 - Continue refining expert-elicited models
 

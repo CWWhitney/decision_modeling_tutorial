@@ -10,7 +10,7 @@
 
 <meta name="author" content="Cory Whitney" />
 
-<meta name="date" content="2025-03-15" />
+<meta name="date" content="2025-03-18" />
 
 <meta name="progressive" content="false" />
 <meta name="allow-skip" content="false" />
@@ -181,6 +181,8 @@ Explanations</a></p>
 <div id="section-option-2-upload-a-hand-drawn-model"
 class="section level3">
 <h3><strong>Option 2: Upload a Hand-Drawn Model</strong></h3>
+<p>Sketch out a decision model on a piece of paper and share with
+us.</p>
 <div class="form-group shiny-input-container">
 <label class="control-label" id="model_upload-label" for="model_upload">Upload your decision model (optional)</label>
 <div class="input-group">
@@ -207,8 +209,8 @@ Model</strong></h2>
 We will analyze a <strong>decision</strong>. The choice of a farmer to
 start agroforestry (apple trees + sheep) or maintain a treeless sheep
 system. Use <code>set.seed</code> and change the number of simulations
-to 1000</p>
-<div class="tutorial-exercise" data-label="apples_sheep_in_class"
+to 1000.</p>
+<div class="tutorial-exercise" data-label="apples_model"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
 <pre class="text"><code># set.seed(42)
@@ -216,47 +218,19 @@ num_simulations &lt;- 100
 
 # Define ranges per ha per year Euro
 # lower and upper
-apple_income_range &lt;- c(3000, 60000)
-apple_costs_range &lt;- c(15000, 30000)
-
 apple_income &lt;- runif(n = num_simulations, 
-                      min = apple_income_range[1], 
-                      max = apple_income_range[2])
+                      min = 3000, 
+                      max = 60000)
 
 apple_costs &lt;- runif(n = num_simulations, 
-                      min = apple_costs_range[1], 
-                     max = apple_costs_range[2])
+                      min = 15000, 
+                     max = 30000)
 
-apple_profits &lt;- apple_income - apple_costs
-
-hist(apple_profits)
-
-abline(v = quantile(apple_profits, 
-                    c(0.1, 0.5, 0.9), 
-                    lwd = 10)) # lwd = line width
-
-# Add sheep to the horticulture system 
-# Now it is silvopastoral 
-
-# Euro per ha per year
-sheep_income_range &lt;- c(2000, 5000)
-sheep_costs_range &lt;- c(1000, 2500)
-
-sheep_income &lt;- runif(n = num_simulations, 
-                      min = sheep_income_range[1], 
-                      max = sheep_income_range[2])
-
-sheep_costs &lt;- runif(n = num_simulations, 
-                     min = sheep_costs_range[1], 
-                     max = sheep_costs_range[2])
-
-sheep_profits &lt;- sheep_income - sheep_costs
-
-total_profits &lt;- apple_profits + sheep_profits</code></pre>
+apple_profits &lt;- apple_income - apple_costs</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support"
-data-label="apples_sheep_in_class-solution" data-completion="1"
+data-label="apples_model-solution" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0"
 data-pipe="|&gt;">
 <pre class="text"><code>set.seed(42)
@@ -264,46 +238,52 @@ num_simulations &lt;- 1000
 
 # Define ranges per ha per year Euro
 # lower and upper
-apple_income_range &lt;- c(3000, 60000)
-apple_costs_range &lt;- c(15000, 30000)
-
 apple_income &lt;- runif(n = num_simulations, 
-                      min = apple_income_range[1], 
-                      max = apple_income_range[2])
+                      min = 3000, 
+                      max = 60000)
 
 apple_costs &lt;- runif(n = num_simulations, 
-                      min = apple_costs_range[1], 
-                     max = apple_costs_range[2])
+                      min = 15000, 
+                     max = 30000)
 
-apple_profits &lt;- apple_income - apple_costs
-
-hist(apple_profits)
-
-abline(v = quantile(apple_profits, 
-                    c(0.1, 0.5, 0.9), 
-                    lwd = 10)) # lwd = line width
-
-# Add sheep to the horticulture system 
-# Now it is silvopastoral 
-
-# Euro per ha per year
-sheep_income_range &lt;- c(2000, 5000)
-sheep_costs_range &lt;- c(1000, 2500)
-
+apple_profits &lt;- apple_income - apple_costs</code></pre>
+</div>
+<p>Add sheep to the horticulture system. So we can judge the relative
+benefits of transition to a silvopastoral agroforestry system. Add the
+sheep and apple profits as a last step in the function.</p>
+<div class="tutorial-exercise" data-label="sheep_model"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># Euro per ha per year
 sheep_income &lt;- runif(n = num_simulations, 
-                      min = sheep_income_range[1], 
-                      max = sheep_income_range[2])
+                      min = 2000, 
+                      max = 5000)
 
 sheep_costs &lt;- runif(n = num_simulations, 
-                     min = sheep_costs_range[1], 
-                     max = sheep_costs_range[2])
+                     min = 1000, 
+                     max = 2500)
+
+sheep_profits &lt;- sheep_income - sheep_costs</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="sheep_model-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># Euro per ha per year
+sheep_income &lt;- runif(n = num_simulations, 
+                      min = 2000, 
+                      max = 5000)
+
+sheep_costs &lt;- runif(n = num_simulations, 
+                     min = 1000, 
+                     max = 2500)
 
 sheep_profits &lt;- sheep_income - sheep_costs
 
 total_profits &lt;- apple_profits + sheep_profits</code></pre>
 </div>
-<p>Plot a histogram of the model. Change the color of the apple_profits
-to grey.</p>
+<p>Plot a histogram of the profits. Change the color of the
+apple_profits to grey.</p>
 <div class="tutorial-exercise" data-label="plot_profits_overlay"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
@@ -322,176 +302,313 @@ hist(sheep_profits, add = TRUE, col = &quot;black&quot;)</code></pre>
 </div>
 <hr />
 </div>
-<div
-id="section-lets-build-a-similar-model-with-the-decisionsupport-package"
-class="section level2">
-<h2>Let’s build a similar model with the <code>decisionSupport</code>
-package</h2>
-<div id="section-define-input-estimates" class="section level3">
-<h3><strong>Define Input Estimates</strong></h3>
-<p>Adjust these as you see fit. The lower bounds could be lower for
-example.</p>
-<div class="tutorial-exercise" data-label="apple_sheep_estimates"
+<div id="section-pareto-optimality" class="section level2">
+<h2><strong>5. Pareto-Optimality)</strong></h2>
+<p>Now we will calcualte PAreto-Optimality. We will use the concept of
+the Pareto front to find the best trade-offs between two competing
+objectives. We can learn which solutions are <em>optimal</em> (better in
+at least one way, without being worse in another) and which solutions
+are <em>dominated</em> (we could improve at least one objective without
+making the other worse).</p>
+<p>First we need to increase the model complexity a little by adding
+management options. We add stocking density (sheep per hectare), tree
+density (trees per hectare), proportion of tree area, and proportion of
+sheep area (1 - proportion_tree_area). Adjust these numbers to reflect
+your best estimate.</p>
+<div class="tutorial-exercise" data-label="management_variables"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>input_estimates &lt;- data.frame(
-  variable = c(&quot;sheep_income&quot;, &quot;sheep_cost&quot;, &quot;apple_income&quot;, &quot;apple_cost&quot;, &quot;discount_rate&quot;),
-  lower = c(3000, 1000, 30000, 15000, 10),
-  median = NA,
-  upper = c(5000, 2500, 60000, 30000, 10),
-  distribution = c(&quot;posnorm&quot;, &quot;posnorm&quot;, &quot;posnorm&quot;, &quot;posnorm&quot;, &quot;const&quot;),
-  label = c(&quot;Income from sheep (euro/year)&quot;, &quot;Cost of sheep (euro/year)&quot;, &quot;Income from apple (euro/year)&quot;, &quot;Cost of apple (euro/year)&quot;, &quot;Discount Rate&quot;)
-)</code></pre>
+<pre class="text"><code># Define management variables per hectare
+max_stocking_density &lt;- 20  # Max sheep per ha before overgrazing effects occur
+stocking_density &lt;- runif(num_simulations, min = 5, max = max_stocking_density)
+
+max_tree_density &lt;- 500   # Maximum trees per hectare
+tree_density &lt;- runif(num_simulations, min = 50, max = max_tree_density)
+
+# Define proportion of tree area vs. sheep area
+proportion_tree_area &lt;- runif(num_simulations, min = 0.2, max = 0.8)
+proportion_sheep_area &lt;- 1 - proportion_tree_area  # Remaining area for sheep</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support"
-data-label="apple_sheep_estimates-solution" data-completion="1"
+data-label="management_variables-solution" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0"
 data-pipe="|&gt;">
-<pre class="text"><code>input_estimates &lt;- data.frame(
-  variable = c(&quot;sheep_income&quot;, &quot;sheep_cost&quot;, &quot;apple_income&quot;, &quot;apple_cost&quot;, &quot;discount_rate&quot;),
-  lower = c(300, 100, 3000, 1500, 1),
-  median = NA,
-  upper = c(5000, 2500, 60000, 30000, 10),
-  distribution = c(&quot;posnorm&quot;, &quot;posnorm&quot;, &quot;posnorm&quot;, &quot;posnorm&quot;, &quot;const&quot;),
-  label = c(&quot;Income from sheep (euro/year)&quot;, &quot;Cost of sheep (euro/year)&quot;, &quot;Income from apple (euro/year)&quot;, &quot;Cost of apple (euro/year)&quot;, &quot;Discount Rate&quot;)
-)</code></pre>
+<pre class="text"><code># Define management variables per hectare
+max_stocking_density &lt;- 40  # Max sheep per ha before overgrazing effects occur
+stocking_density &lt;- runif(num_simulations, min = 5, max = max_stocking_density)
+
+max_tree_density &lt;- 200   # Maximum trees per hectare
+tree_density &lt;- runif(num_simulations, min = 50, max = max_tree_density)
+
+# Define proportion of tree area vs. sheep area
+proportion_tree_area &lt;- runif(num_simulations, min = 0.2, max = 0.8)
+proportion_sheep_area &lt;- 1 - proportion_tree_area  # Remaining area for sheep
+
+total_profits_agroforestry &lt;- apple_profits + (sheep_profits * proportion_sheep_area)
+total_profits_treeless &lt;- sheep_profits  # No tree component in treeless system</code></pre>
 </div>
-</div>
-<div id="section-build-the-decision-model-function"
-class="section level3">
-<h3><strong>Build the Decision Model Function</strong></h3>
-<p>Adjust as you see fit. Add the income from agroforestry
-<code>AF_income</code> to the return for example.</p>
-<div class="tutorial-exercise" data-label="apple_sheep_model_function"
+<p>Adjust these biodiversity numbers to reflect your best estimate. For
+example, depending on the ecosystem, each tree likely adds far fewer
+species and each sheep likely has far less of a negative impact.</p>
+<div class="tutorial-exercise" data-label="biodiversity_variables"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>model_function &lt;- function() {
-  AF_income &lt;- sheep_income + apple_income
-  AF_cost &lt;- sheep_cost + apple_cost
-  AF_final_result &lt;- AF_income - AF_cost
-  sheep_only &lt;- sheep_income - sheep_cost
-  Decision_benefit &lt;- AF_final_result - sheep_only
-  
-  AF_NPV &lt;- discount(AF_final_result, discount_rate = discount_rate, calculate_NPV = TRUE)
-  NPV_sheep_only &lt;- discount(sheep_only, discount_rate = discount_rate, calculate_NPV = TRUE)
-  NPV_decision &lt;- discount(Decision_benefit, discount_rate = discount_rate, calculate_NPV = TRUE)
-  
-  return(list(
-    NPV_Agroforestry_System = AF_NPV,
-    NPV_Treeless_System = NPV_sheep_only,
-    NPV_decision = NPV_decision
-  ))
-}</code></pre>
+<pre class="text"><code># Define species richness and grazing impact factors per hectare
+species_richness_per_tree &lt;- 0.05  # Each tree adds 0.05 species per ha
+species_loss_per_sheep &lt;- 0.02  # Each sheep reduces 0.02 species per ha
+
+# Calculate biodiversity per ha
+tree_species_richness &lt;- tree_density * species_richness_per_tree
+grazing_species_loss &lt;- stocking_density * species_loss_per_sheep
+
+# Compute biodiversity outcomes per ha
+biodiversity_agroforestry &lt;- tree_species_richness - grazing_species_loss
+biodiversity_treeless &lt;- -grazing_species_loss  # No trees, only grazing effect
+
+# Calculate difference (decision impact of trees)
+# measures the financial difference when switching to trees
+total_profits &lt;- total_profits_agroforestry - total_profits_treeless
+
+# Calculate difference (decision impact of trees on biodiversity)
+# measures the net gain/loss in biodiversity from switching to trees
+biodiversity_impact &lt;- biodiversity_agroforestry - biodiversity_treeless
+
+# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
+biodiversity_value_per_species &lt;- 500  # Assume each additional species is worth €500
+
+# Compute a combined utility function
+utility &lt;- total_profits + (biodiversity_impact * biodiversity_value_per_species)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support"
-data-label="apple_sheep_model_function-solution" data-completion="1"
+data-label="biodiversity_variables-solution" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0"
 data-pipe="|&gt;">
-<pre class="text"><code>model_function &lt;- function() {
-  AF_income &lt;- sheep_income + apple_income
-  AF_cost &lt;- sheep_cost + apple_cost
-  AF_final_result &lt;- AF_income - AF_cost
-  sheep_only &lt;- sheep_income - sheep_cost
-  Decision_benefit &lt;- AF_final_result - sheep_only
-  
-  AF_NPV &lt;- discount(AF_final_result, discount_rate = discount_rate, calculate_NPV = TRUE)
-  NPV_sheep_only &lt;- discount(sheep_only, discount_rate = discount_rate, calculate_NPV = TRUE)
-  NPV_decision &lt;- discount(Decision_benefit, discount_rate = discount_rate, calculate_NPV = TRUE)
-  
-  return(list(
-    NPV_Agroforestry_System = AF_NPV,
-    NPV_Treeless_System = NPV_sheep_only,
-    NPV_decision = NPV_decision, 
-    AF_income = AF_income
-  ))
-}</code></pre>
+<pre class="text"><code># Define species richness and grazing impact factors per hectare
+species_richness_per_tree &lt;- 0.01  # Each tree adds 0.001 species per ha
+species_loss_per_sheep &lt;- 0.001  # Each sheep reduces 0.001 species per ha
+
+# Calculate biodiversity per ha
+tree_species_richness &lt;- tree_density * species_richness_per_tree
+grazing_species_loss &lt;- stocking_density * species_loss_per_sheep
+
+# Compute biodiversity outcomes per ha
+biodiversity_agroforestry &lt;- tree_species_richness - grazing_species_loss
+biodiversity_treeless &lt;- -grazing_species_loss  # No trees, only grazing effect
+
+# Calculate difference (decision impact of trees)
+# measures the financial difference when switching to trees
+total_profits &lt;- total_profits_agroforestry - total_profits_treeless
+
+# Calculate difference (decision impact of trees on biodiversity)
+# measures the net gain/loss in biodiversity from switching to trees
+biodiversity_impact &lt;- biodiversity_agroforestry - biodiversity_treeless
+
+# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
+biodiversity_value_per_species &lt;- 500  # Assume each additional species is worth €500
+
+# Compute a combined utility function
+utility &lt;- total_profits + (biodiversity_impact * biodiversity_value_per_species)</code></pre>
 </div>
-</div>
-<div id="section-run-the-monte-carlo-simulation" class="section level3">
-<h3><strong>Run the Monte Carlo Simulation</strong></h3>
-<p>Adjust the number of simulations to <code>1000</code>.</p>
-<div class="tutorial-exercise" data-label="apple_sheep_mc"
+<p>For the Pareto front plot we will first add the data together, store
+results in dataframe and plot a scatter plot. Change the color of the
+points in the scatter plot to green.</p>
+<div class="tutorial-exercise" data-label="results_data"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>apple_sheep_mc_simulation &lt;- mcSimulation(
-  estimate = as.estimate(input_estimates),
-  model_function = model_function,
-  numberOfModelRuns = 100,
-  functionSyntax = &quot;plainNames&quot;
-)</code></pre>
+<pre class="text"><code>results &lt;- data.frame(
+  total_profits,
+  biodiversity_impact
+)
+
+# Scatter plot
+plot(results$biodiversity_impact, results$total_profits,
+     col = &quot;blue&quot;, pch = 19, xlab = &quot;Biodiversity Impact (Species Change per ha)&quot;,
+     ylab = &quot;Total Profits (€ per ha)&quot;, main = &quot;Pareto Front: Agroforestry vs. Treeless System&quot;)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support"
-data-label="apple_sheep_mc-solution" data-completion="1"
+data-label="results_data-solution" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0"
 data-pipe="|&gt;">
-<pre class="text"><code>apple_sheep_mc_simulation &lt;- mcSimulation(
-  estimate = as.estimate(input_estimates),
-  model_function = model_function,
-  numberOfModelRuns = 1000,
-  functionSyntax = &quot;plainNames&quot;
-)</code></pre>
+<pre class="text"><code>results &lt;- data.frame(
+  total_profits,
+  biodiversity_impact
+)
+
+# Scatter plot
+plot(results$biodiversity_impact, results$total_profits,
+     col = &quot;green&quot;, pch = 19, xlab = &quot;Biodiversity Impact (Species Change per ha)&quot;,
+     ylab = &quot;Total Profits (€ per ha)&quot;, main = &quot;Pareto Front: Agroforestry vs. Treeless System&quot;)</code></pre>
+</div>
+<p>Now we can look for the non-dominated points where no other solution
+is better in both biodiversity and total profits. A point (biodiversity,
+profit) is Pareto-optimal if no other point has higher biodiversity and
+higher profits. Change the color of the points to blue.</p>
+<div class="tutorial-exercise" data-label="pareto_points"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># Sort results by biodiversity impact
+results &lt;- results[order(results$biodiversity_impact, decreasing = TRUE),]
+
+# Initialize Pareto front
+pareto_front &lt;- results[1, ]  # Start with the first point
+
+# Loop through sorted results and keep only non-dominated points
+for (i in 2:nrow(results)) {
+  if (results$total_profits[i] &gt; tail(pareto_front$total_profits, 1)) {
+    pareto_front &lt;- rbind(pareto_front, results[i, ])
+  }
+}
+
+# Plot all points
+plot(results$biodiversity_impact, results$total_profits,
+     col = &quot;green&quot;, pch = 19, xlab = &quot;Biodiversity Impact (Species Change per ha)&quot;,
+     ylab = &quot;Total Profits (€ per ha)&quot;, main = &quot;Pareto Front: Agroforestry vs. Treeless System&quot;)
+
+# Highlight Pareto front points
+points(pareto_front$biodiversity_impact, pareto_front$total_profits,
+       col = &quot;red&quot;, pch = 19, type = &quot;o&quot;, lwd = 2)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support"
+data-label="pareto_points-solution" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0"
+data-pipe="|&gt;">
+<pre class="text"><code># Sort results by biodiversity impact
+results &lt;- results[order(results$biodiversity_impact, decreasing = TRUE),]
+
+# Initialize Pareto front
+pareto_front &lt;- results[1, ]  # Start with the first point
+
+# Loop through sorted results and keep only non-dominated points
+for (i in 2:nrow(results)) {
+  if (results$total_profits[i] &gt; tail(pareto_front$total_profits, 1)) {
+    pareto_front &lt;- rbind(pareto_front, results[i, ])
+  }
+}
+
+# Plot all points
+plot(results$biodiversity_impact, results$total_profits,
+     col = &quot;green&quot;, pch = 19, xlab = &quot;Biodiversity Impact (Species Change per ha)&quot;,
+     ylab = &quot;Total Profits (€ per ha)&quot;, main = &quot;Pareto Front: Agroforestry vs. Treeless System&quot;)
+
+# Highlight Pareto front points
+points(pareto_front$biodiversity_impact, pareto_front$total_profits,
+       col = &quot;blue&quot;, pch = 19, type = &quot;o&quot;, lwd = 2)</code></pre>
+</div>
+<p>Now we can zoom in on the Pareto-optimal points and examine the
+conditions for key operational variables we calculated earlier.</p>
+<div class="tutorial-exercise" data-label="pareto_conditions"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># Extract operational conditions for Pareto-optimal points
+pareto_conditions &lt;- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &amp;
+                               results$total_profits %in% pareto_front$total_profits,]
+
+# Merge with original dataset to include operational variables
+pareto_conditions &lt;- merge(pareto_conditions, data.frame(
+  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),
+  by = c(&quot;biodiversity_impact&quot;, &quot;total_profits&quot;))
+
+# Show Pareto-optimal conditions
+print(pareto_conditions)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support"
+data-label="pareto_conditions-solution" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0"
+data-pipe="|&gt;">
+<pre class="text"><code># Extract operational conditions for Pareto-optimal points
+pareto_conditions &lt;- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &amp;
+                               results$total_profits %in% pareto_front$total_profits,]
+
+# Merge with original dataset to include operational variables
+pareto_conditions &lt;- merge(pareto_conditions, data.frame(
+  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),
+  by = c(&quot;biodiversity_impact&quot;, &quot;total_profits&quot;))
+
+# Show Pareto-optimal conditions
+print(pareto_conditions)</code></pre>
+</div>
+<p>Finally we can plot the Pareto. Make the color of the points
+blue.</p>
+<div class="tutorial-exercise" data-label="plot_pareto"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># Determine dynamic position based on plot coordinates
+text_positions &lt;- ifelse(
+  pareto_front$biodiversity_impact &gt; median(pareto_front$biodiversity_impact), 2, 4
+)
+
+# Adjust for very high or low points
+text_positions &lt;- ifelse(
+  pareto_front$total_profits &gt; quantile(pareto_front$total_profits, 0.75), 1, text_positions
+)
+text_positions &lt;- ifelse(
+  pareto_front$total_profits &lt; quantile(pareto_front$total_profits, 0.25), 3, text_positions
+)
+
+# Plot Pareto front
+plot(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     col = &quot;red&quot;, pch = 19, type = &quot;o&quot;, lwd = 2,
+     xlab = &quot;Biodiversity Impact (Species Change per ha)&quot;,
+     ylab = &quot;Total Profits (€ per ha)&quot;, main = &quot;Pareto Front: Agroforestry vs. Treeless System&quot;)
+
+# Add footnote at the bottom
+mtext(&quot;S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area&quot;, 
+      side = 1, line = 4, cex = 0.8)
+
+# Create multi-line labels with line breaks
+labels &lt;- paste0(&quot;S:&quot;, round(pareto_conditions$stocking_density, 1), &quot;\n&quot;,
+                 &quot;T:&quot;, round(pareto_conditions$tree_density, 1), &quot;\n&quot;,
+                 &quot;P:&quot;, round(pareto_conditions$proportion_tree_area, 2))
+
+# Annotate with dynamically positioned text
+text(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     labels = labels, pos = text_positions, cex = 0.8)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="plot_pareto-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># Determine dynamic position based on plot coordinates
+text_positions &lt;- ifelse(
+  pareto_front$biodiversity_impact &gt; median(pareto_front$biodiversity_impact), 2, 4
+)
+
+# Adjust for very high or low points
+text_positions &lt;- ifelse(
+  pareto_front$total_profits &gt; quantile(pareto_front$total_profits, 0.75), 1, text_positions
+)
+text_positions &lt;- ifelse(
+  pareto_front$total_profits &lt; quantile(pareto_front$total_profits, 0.25), 3, text_positions
+)
+
+# Plot Pareto front
+plot(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     col = &quot;blue&quot;, pch = 19, type = &quot;o&quot;, lwd = 2,
+     xlab = &quot;Biodiversity Impact (Species Change per ha)&quot;,
+     ylab = &quot;Total Profits (€ per ha)&quot;, main = &quot;Pareto Front: Agroforestry vs. Treeless System&quot;)
+
+# Add footnote at the bottom
+mtext(&quot;S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area&quot;, 
+      side = 1, line = 4, cex = 0.8)
+
+# Create multi-line labels with line breaks
+labels &lt;- paste0(&quot;S:&quot;, round(pareto_conditions$stocking_density, 1), &quot;\n&quot;,
+                 &quot;T:&quot;, round(pareto_conditions$tree_density, 1), &quot;\n&quot;,
+                 &quot;P:&quot;, round(pareto_conditions$proportion_tree_area, 2))
+
+# Annotate with dynamically positioned text
+text(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     labels = labels, pos = text_positions, cex = 0.8)</code></pre>
 </div>
 <hr />
-</div>
-</div>
-<div id="section-expert-knowledge-validation-evpi-pareto-optimality"
-class="section level2">
-<h2><strong>5. Expert Knowledge &amp; Validation (EVPI &amp;
-Pareto-Optimality)</strong></h2>
-<div id="section-expected-value-of-perfect-information-evpi"
-class="section level3">
-<h3><strong>Expected Value of Perfect Information (EVPI)</strong></h3>
-<div class="tutorial-exercise" data-label="evpi_calc"
-data-completion="1" data-diagnostics="1" data-startover="1"
-data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>mcSimulation_table &lt;- data.frame(apple_sheep_mc_simulation$x, apple_sheep_mc_simulation$y[3])
-evpi &lt;- multi_EVPI(mc = mcSimulation_table, first_out_var = &quot;NPV_decision&quot;)
-evpi</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
-</div>
-<div class="tutorial-exercise-support" data-label="evpi_calc-solution"
-data-completion="1" data-diagnostics="1" data-startover="1"
-data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>mcSimulation_table &lt;- data.frame(apple_sheep_mc_simulation$x, apple_sheep_mc_simulation$y[3])
-evpi &lt;- multi_EVPI(mc = mcSimulation_table, first_out_var = &quot;NPV_decision&quot;)
-evpi</code></pre>
-</div>
-</div>
-<div id="section-trade-off-analysis-using-pareto-optimality"
-class="section level3">
-<h3><strong>Trade-Off Analysis Using Pareto-Optimality</strong></h3>
-<div class="tutorial-exercise" data-label="pareto_analysis"
-data-completion="1" data-diagnostics="1" data-startover="1"
-data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>decision1 &lt;- apple_sheep_mc_simulation$y$NPV_Agroforestry_System
-decision2 &lt;- apple_sheep_mc_simulation$y$NPV_Treeless_System
-
-ggplot(data.frame(decision1, decision2), aes(x=decision1, y=decision2)) +
-  geom_point(alpha=0.2, color=&quot;blue&quot;) +
-  labs(title=&quot;Pareto Front: Agroforestry vs Treeless System&quot;,
-       x=&quot;Agroforestry System (NPV)&quot;, y=&quot;Treeless System (NPV)&quot;)</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
-</div>
-<div class="tutorial-exercise-support"
-data-label="pareto_analysis-solution" data-completion="1"
-data-diagnostics="1" data-startover="1" data-lines="0"
-data-pipe="|&gt;">
-<pre class="text"><code>decision1 &lt;- apple_sheep_mc_simulation$y$NPV_Agroforestry_System
-decision2 &lt;- apple_sheep_mc_simulation$y$NPV_Treeless_System
-
-ggplot(data.frame(decision1, decision2), aes(x=decision1, y=decision2)) +
-  geom_point(alpha=0.2, color=&quot;blue&quot;) +
-  labs(title=&quot;Pareto Front: Agroforestry vs Treeless System&quot;,
-       x=&quot;Agroforestry System (NPV)&quot;, y=&quot;Treeless System (NPV)&quot;)</code></pre>
-</div>
-<hr />
-</div>
 </div>
 <div id="section-final-reflection" class="section level2">
-<h2><strong>6. Final Reflection</strong></h2>
+<h2><strong>7. Final Reflection</strong></h2>
 <ul>
 <li>What insights did you gain from this tutorial?</li>
 <li>How would you improve your decision model?</li>
@@ -507,7 +624,6 @@ conservation?</strong></li>
 <div id="section-next-steps" class="section level2">
 <h2><strong>Next Steps</strong></h2>
 <ul>
-<li>Explore the <code>decisionSupport</code> package further</li>
 <li>Apply Monte Carlo simulations to your own research</li>
 <li>Continue refining expert-elicited models</li>
 </ul>
@@ -515,8 +631,17 @@ conservation?</strong></li>
 <p>
 <script type="application/shiny-prerendered" data-context="server-start">
 knitr::opts_chunk$set(echo = TRUE)
+
+library(decisionSupport)
+library(ggplot2)
+library(learnr)
+library(shiny)
+library(DiagrammeR)
+
 source("functions/monte_carlo.R")
 source("functions/apples_sheep_in_class.R")
+source("functions/apple_sheep_pareto.R")
+
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -542,22 +667,22 @@ session$onSessionEnded(function() {
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "question1-1", 
     question = structure("What is a good reason to use a probabilistic approach to support decision-making in agroecology?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_5cc5d73", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f7fd393", 
         option = "It captures uncertainty in outcomes and trade-offs.", 
         value = "It captures uncertainty in outcomes and trade-offs.", 
         label = structure("It captures uncertainty in outcomes and trade-offs.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ddf17ff", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3cbbcd6", 
         option = "It provides fixed deterministic solutions.", 
         value = "It provides fixed deterministic solutions.", 
         label = structure("It provides fixed deterministic solutions.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d30ec53", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_92d3940", 
         option = "It replaces the need for expert knowledge.", 
         value = "It replaces the need for expert knowledge.", 
         label = structure("It replaces the need for expert knowledge.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7f52217", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b4a18ac", 
         option = "It avoids the need for validation.", value = "It avoids the need for validation.", 
         label = structure("It avoids the need for validation.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -569,42 +694,34 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "question1-1-answer", question = "question1-1"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = FALSE, 
-    seed = 650779696.196957, options = list()), class = c("learnr_radio", 
+    seed = 282837185.368294, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
 
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-apples_sheep_in_class-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-apples_sheep_in_class-code-editor`)), session)
-output$`tutorial-exercise-apples_sheep_in_class-output` <- renderUI({
-  `tutorial-exercise-apples_sheep_in_class-result`()
+`tutorial-exercise-apples_model-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-apples_model-code-editor`)), session)
+output$`tutorial-exercise-apples_model-output` <- renderUI({
+  `tutorial-exercise-apples_model-result`()
 })
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache(structure(list(label = "apples_sheep_in_class", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
-"source(\"functions/monte_carlo.R\")", "source(\"functions/apples_sheep_in_class.R\")"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "apples_sheep_in_class", code = "\n# set.seed(42)\nnum_simulations <- 100\n\n# Define ranges per ha per year Euro\n# lower and upper\napple_income_range <- c(3000, 60000)\napple_costs_range <- c(15000, 30000)\n\napple_income <- runif(n = num_simulations, \n                      min = apple_income_range[1], \n                      max = apple_income_range[2])\n\napple_costs <- runif(n = num_simulations, \n                      min = apple_costs_range[1], \n                     max = apple_costs_range[2])\n\napple_profits <- apple_income - apple_costs\n\nhist(apple_profits)\n\nabline(v = quantile(apple_profits, \n                    c(0.1, 0.5, 0.9), \n                    lwd = 10)) # lwd = line width\n\n# Add sheep to the horticulture system \n# Now it is silvopastoral \n\n# Euro per ha per year\nsheep_income_range <- c(2000, 5000)\nsheep_costs_range <- c(1000, 2500)\n\nsheep_income <- runif(n = num_simulations, \n                      min = sheep_income_range[1], \n                      max = sheep_income_range[2])\n\nsheep_costs <- runif(n = num_simulations, \n                     min = sheep_costs_range[1], \n                     max = sheep_costs_range[2])\n\nsheep_profits <- sheep_income - sheep_costs\n\ntotal_profits <- apple_profits + sheep_profits", 
-        opts = list(label = "\"apples_sheep_in_class\"", exercise = "TRUE"), 
+learnr:::store_exercise_cache(structure(list(label = "apples_model", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "apples_model", code = "\n# set.seed(42)\nnum_simulations <- 100\n\n# Define ranges per ha per year Euro\n# lower and upper\napple_income <- runif(n = num_simulations, \n                      min = 3000, \n                      max = 60000)\n\napple_costs <- runif(n = num_simulations, \n                      min = 15000, \n                     max = 30000)\n\napple_profits <- apple_income - apple_costs", 
+        opts = list(label = "\"apples_model\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = structure(c("", "set.seed(42)", 
     "num_simulations <- 1000", "", "# Define ranges per ha per year Euro", 
-    "# lower and upper", "apple_income_range <- c(3000, 60000)", 
-    "apple_costs_range <- c(15000, 30000)", "", "apple_income <- runif(n = num_simulations, ", 
-    "                      min = apple_income_range[1], ", "                      max = apple_income_range[2])", 
-    "", "apple_costs <- runif(n = num_simulations, ", "                      min = apple_costs_range[1], ", 
-    "                     max = apple_costs_range[2])", "", "apple_profits <- apple_income - apple_costs", 
-    "", "hist(apple_profits)", "", "abline(v = quantile(apple_profits, ", 
-    "                    c(0.1, 0.5, 0.9), ", "                    lwd = 10)) # lwd = line width", 
-    "", "# Add sheep to the horticulture system ", "# Now it is silvopastoral ", 
-    "", "# Euro per ha per year", "sheep_income_range <- c(2000, 5000)", 
-    "sheep_costs_range <- c(1000, 2500)", "", "sheep_income <- runif(n = num_simulations, ", 
-    "                      min = sheep_income_range[1], ", "                      max = sheep_income_range[2])", 
-    "", "sheep_costs <- runif(n = num_simulations, ", "                     min = sheep_costs_range[1], ", 
-    "                     max = sheep_costs_range[2])", "", "sheep_profits <- sheep_income - sheep_costs", 
-    "", "total_profits <- apple_profits + sheep_profits"), chunk_opts = list(
-        label = "apples_sheep_in_class-solution")), tests = NULL, 
+    "# lower and upper", "apple_income <- runif(n = num_simulations, ", 
+    "                      min = 3000, ", "                      max = 60000)", 
+    "", "apple_costs <- runif(n = num_simulations, ", "                      min = 15000, ", 
+    "                     max = 30000)", "", "apple_profits <- apple_income - apple_costs"
+    ), chunk_opts = list(label = "apples_model-solution")), tests = NULL, 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -621,26 +738,64 @@ learnr:::store_exercise_cache(structure(list(label = "apples_sheep_in_class", gl
         aniopts = "controls,loop", warning = TRUE, error = FALSE, 
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, label = "apples_sheep_in_class", exercise = TRUE, 
+        max.print = 1000, label = "apples_model", exercise = TRUE, 
         code = c("", "# set.seed(42)", "num_simulations <- 100", 
         "", "# Define ranges per ha per year Euro", "# lower and upper", 
-        "apple_income_range <- c(3000, 60000)", "apple_costs_range <- c(15000, 30000)", 
-        "", "apple_income <- runif(n = num_simulations, ", "                      min = apple_income_range[1], ", 
-        "                      max = apple_income_range[2])", 
-        "", "apple_costs <- runif(n = num_simulations, ", "                      min = apple_costs_range[1], ", 
-        "                     max = apple_costs_range[2])", "", 
-        "apple_profits <- apple_income - apple_costs", "", "hist(apple_profits)", 
-        "", "abline(v = quantile(apple_profits, ", "                    c(0.1, 0.5, 0.9), ", 
-        "                    lwd = 10)) # lwd = line width", 
-        "", "# Add sheep to the horticulture system ", "# Now it is silvopastoral ", 
-        "", "# Euro per ha per year", "sheep_income_range <- c(2000, 5000)", 
-        "sheep_costs_range <- c(1000, 2500)", "", "sheep_income <- runif(n = num_simulations, ", 
-        "                      min = sheep_income_range[1], ", 
-        "                      max = sheep_income_range[2])", 
-        "", "sheep_costs <- runif(n = num_simulations, ", "                     min = sheep_costs_range[1], ", 
-        "                     max = sheep_costs_range[2])", "", 
-        "sheep_profits <- sheep_income - sheep_costs", "", "total_profits <- apple_profits + sheep_profits"
-        ), out.width.px = 624, out.height.px = 384, params.src = "apples_sheep_in_class, exercise=TRUE", 
+        "apple_income <- runif(n = num_simulations, ", "                      min = 3000, ", 
+        "                      max = 60000)", "", "apple_costs <- runif(n = num_simulations, ", 
+        "                      min = 15000, ", "                     max = 30000)", 
+        "", "apple_profits <- apple_income - apple_costs"), out.width.px = 624, 
+        out.height.px = 384, params.src = "apples_model, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-sheep_model-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-sheep_model-code-editor`)), session)
+output$`tutorial-exercise-sheep_model-output` <- renderUI({
+  `tutorial-exercise-sheep_model-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "sheep_model", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "sheep_model", code = "\n# Euro per ha per year\nsheep_income <- runif(n = num_simulations, \n                      min = 2000, \n                      max = 5000)\n\nsheep_costs <- runif(n = num_simulations, \n                     min = 1000, \n                     max = 2500)\n\nsheep_profits <- sheep_income - sheep_costs", 
+        opts = list(label = "\"sheep_model\"", exercise = "TRUE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = structure(c("", "# Euro per ha per year", 
+    "sheep_income <- runif(n = num_simulations, ", "                      min = 2000, ", 
+    "                      max = 5000)", "", "sheep_costs <- runif(n = num_simulations, ", 
+    "                     min = 1000, ", "                     max = 2500)", 
+    "", "sheep_profits <- sheep_income - sheep_costs", "", "total_profits <- apple_profits + sheep_profits"
+    ), chunk_opts = list(label = "sheep_model-solution")), tests = NULL, 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Tutorial_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Tutorial_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, label = "sheep_model", exercise = TRUE, 
+        code = c("", "# Euro per ha per year", "sheep_income <- runif(n = num_simulations, ", 
+        "                      min = 2000, ", "                      max = 5000)", 
+        "", "sheep_costs <- runif(n = num_simulations, ", "                     min = 1000, ", 
+        "                     max = 2500)", "", "sheep_profits <- sheep_income - sheep_costs"
+        ), out.width.px = 624, out.height.px = 384, params.src = "sheep_model, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
@@ -656,8 +811,10 @@ output$`tutorial-exercise-plot_profits_overlay-output` <- renderUI({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "plot_profits_overlay", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
-"source(\"functions/monte_carlo.R\")", "source(\"functions/apples_sheep_in_class.R\")"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
     chunks = list(list(label = "plot_profits_overlay", code = "hist(total_profits, col = \"white\")\nhist(apple_profits, add = TRUE, col = \"pink\")\nhist(sheep_profits, add = TRUE, col = \"black\")", 
         opts = list(label = "\"plot_profits_overlay\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
@@ -691,25 +848,31 @@ learnr:::store_exercise_cache(structure(list(label = "plot_profits_overlay", glo
 
 
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-apple_sheep_estimates-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-apple_sheep_estimates-code-editor`)), session)
-output$`tutorial-exercise-apple_sheep_estimates-output` <- renderUI({
-  `tutorial-exercise-apple_sheep_estimates-result`()
+`tutorial-exercise-management_variables-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-management_variables-code-editor`)), session)
+output$`tutorial-exercise-management_variables-output` <- renderUI({
+  `tutorial-exercise-management_variables-result`()
 })
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache(structure(list(label = "apple_sheep_estimates", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
-"source(\"functions/monte_carlo.R\")", "source(\"functions/apples_sheep_in_class.R\")"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "apple_sheep_estimates", code = "input_estimates <- data.frame(\n  variable = c(\"sheep_income\", \"sheep_cost\", \"apple_income\", \"apple_cost\", \"discount_rate\"),\n  lower = c(3000, 1000, 30000, 15000, 10),\n  median = NA,\n  upper = c(5000, 2500, 60000, 30000, 10),\n  distribution = c(\"posnorm\", \"posnorm\", \"posnorm\", \"posnorm\", \"const\"),\n  label = c(\"Income from sheep (euro/year)\", \"Cost of sheep (euro/year)\", \"Income from apple (euro/year)\", \"Cost of apple (euro/year)\", \"Discount Rate\")\n)", 
-        opts = list(label = "\"apple_sheep_estimates\"", exercise = "TRUE"), 
+learnr:::store_exercise_cache(structure(list(label = "management_variables", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "management_variables", code = "\n# Define management variables per hectare\nmax_stocking_density <- 20  # Max sheep per ha before overgrazing effects occur\nstocking_density <- runif(num_simulations, min = 5, max = max_stocking_density)\n\nmax_tree_density <- 500   # Maximum trees per hectare\ntree_density <- runif(num_simulations, min = 50, max = max_tree_density)\n\n# Define proportion of tree area vs. sheep area\nproportion_tree_area <- runif(num_simulations, min = 0.2, max = 0.8)\nproportion_sheep_area <- 1 - proportion_tree_area  # Remaining area for sheep", 
+        opts = list(label = "\"management_variables\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = structure(c("input_estimates <- data.frame(", 
-    "  variable = c(\"sheep_income\", \"sheep_cost\", \"apple_income\", \"apple_cost\", \"discount_rate\"),", 
-    "  lower = c(300, 100, 3000, 1500, 1),", "  median = NA,", 
-    "  upper = c(5000, 2500, 60000, 30000, 10),", "  distribution = c(\"posnorm\", \"posnorm\", \"posnorm\", \"posnorm\", \"const\"),", 
-    "  label = c(\"Income from sheep (euro/year)\", \"Cost of sheep (euro/year)\", \"Income from apple (euro/year)\", \"Cost of apple (euro/year)\", \"Discount Rate\")", 
-    ")"), chunk_opts = list(label = "apple_sheep_estimates-solution")), 
+    check = NULL, solution = structure(c("", "# Define management variables per hectare", 
+    "max_stocking_density <- 40  # Max sheep per ha before overgrazing effects occur", 
+    "stocking_density <- runif(num_simulations, min = 5, max = max_stocking_density)", 
+    "", "max_tree_density <- 200   # Maximum trees per hectare", 
+    "tree_density <- runif(num_simulations, min = 50, max = max_tree_density)", 
+    "", "# Define proportion of tree area vs. sheep area", "proportion_tree_area <- runif(num_simulations, min = 0.2, max = 0.8)", 
+    "proportion_sheep_area <- 1 - proportion_tree_area  # Remaining area for sheep", 
+    "", "total_profits_agroforestry <- apple_profits + (sheep_profits * proportion_sheep_area)", 
+    "total_profits_treeless <- sheep_profits  # No tree component in treeless system"
+    ), chunk_opts = list(label = "management_variables-solution")), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -726,12 +889,16 @@ learnr:::store_exercise_cache(structure(list(label = "apple_sheep_estimates", gl
         aniopts = "controls,loop", warning = TRUE, error = FALSE, 
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, label = "apple_sheep_estimates", exercise = TRUE, 
-        code = c("input_estimates <- data.frame(", "  variable = c(\"sheep_income\", \"sheep_cost\", \"apple_income\", \"apple_cost\", \"discount_rate\"),", 
-        "  lower = c(3000, 1000, 30000, 15000, 10),", "  median = NA,", 
-        "  upper = c(5000, 2500, 60000, 30000, 10),", "  distribution = c(\"posnorm\", \"posnorm\", \"posnorm\", \"posnorm\", \"const\"),", 
-        "  label = c(\"Income from sheep (euro/year)\", \"Cost of sheep (euro/year)\", \"Income from apple (euro/year)\", \"Cost of apple (euro/year)\", \"Discount Rate\")", 
-        ")"), out.width.px = 624, out.height.px = 384, params.src = "apple_sheep_estimates, exercise=TRUE", 
+        max.print = 1000, label = "management_variables", exercise = TRUE, 
+        code = c("", "# Define management variables per hectare", 
+        "max_stocking_density <- 20  # Max sheep per ha before overgrazing effects occur", 
+        "stocking_density <- runif(num_simulations, min = 5, max = max_stocking_density)", 
+        "", "max_tree_density <- 500   # Maximum trees per hectare", 
+        "tree_density <- runif(num_simulations, min = 50, max = max_tree_density)", 
+        "", "# Define proportion of tree area vs. sheep area", 
+        "proportion_tree_area <- runif(num_simulations, min = 0.2, max = 0.8)", 
+        "proportion_sheep_area <- 1 - proportion_tree_area  # Remaining area for sheep"
+        ), out.width.px = 624, out.height.px = 384, params.src = "management_variables, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
@@ -739,31 +906,100 @@ learnr:::store_exercise_cache(structure(list(label = "apple_sheep_estimates", gl
 
 
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-apple_sheep_model_function-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-apple_sheep_model_function-code-editor`)), session)
-output$`tutorial-exercise-apple_sheep_model_function-output` <- renderUI({
-  `tutorial-exercise-apple_sheep_model_function-result`()
+`tutorial-exercise-biodiversity_variables-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-biodiversity_variables-code-editor`)), session)
+output$`tutorial-exercise-biodiversity_variables-output` <- renderUI({
+  `tutorial-exercise-biodiversity_variables-result`()
 })
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache(structure(list(label = "apple_sheep_model_function", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
-"source(\"functions/monte_carlo.R\")", "source(\"functions/apples_sheep_in_class.R\")"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "apple_sheep_model_function", 
-        code = "model_function <- function() {\n  AF_income <- sheep_income + apple_income\n  AF_cost <- sheep_cost + apple_cost\n  AF_final_result <- AF_income - AF_cost\n  sheep_only <- sheep_income - sheep_cost\n  Decision_benefit <- AF_final_result - sheep_only\n  \n  AF_NPV <- discount(AF_final_result, discount_rate = discount_rate, calculate_NPV = TRUE)\n  NPV_sheep_only <- discount(sheep_only, discount_rate = discount_rate, calculate_NPV = TRUE)\n  NPV_decision <- discount(Decision_benefit, discount_rate = discount_rate, calculate_NPV = TRUE)\n  \n  return(list(\n    NPV_Agroforestry_System = AF_NPV,\n    NPV_Treeless_System = NPV_sheep_only,\n    NPV_decision = NPV_decision\n  ))\n}", 
-        opts = list(label = "\"apple_sheep_model_function\"", 
-            exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = structure(c("model_function <- function() {", 
-    "  AF_income <- sheep_income + apple_income", "  AF_cost <- sheep_cost + apple_cost", 
-    "  AF_final_result <- AF_income - AF_cost", "  sheep_only <- sheep_income - sheep_cost", 
-    "  Decision_benefit <- AF_final_result - sheep_only", "  ", 
-    "  AF_NPV <- discount(AF_final_result, discount_rate = discount_rate, calculate_NPV = TRUE)", 
-    "  NPV_sheep_only <- discount(sheep_only, discount_rate = discount_rate, calculate_NPV = TRUE)", 
-    "  NPV_decision <- discount(Decision_benefit, discount_rate = discount_rate, calculate_NPV = TRUE)", 
-    "  ", "  return(list(", "    NPV_Agroforestry_System = AF_NPV,", 
-    "    NPV_Treeless_System = NPV_sheep_only,", "    NPV_decision = NPV_decision, ", 
-    "    AF_income = AF_income", "  ))", "}"), chunk_opts = list(
-        label = "apple_sheep_model_function-solution")), tests = NULL, 
+learnr:::store_exercise_cache(structure(list(label = "biodiversity_variables", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "biodiversity_variables", code = "\n# Define species richness and grazing impact factors per hectare\nspecies_richness_per_tree <- 0.05  # Each tree adds 0.05 species per ha\nspecies_loss_per_sheep <- 0.02  # Each sheep reduces 0.02 species per ha\n\n# Calculate biodiversity per ha\ntree_species_richness <- tree_density * species_richness_per_tree\ngrazing_species_loss <- stocking_density * species_loss_per_sheep\n\n# Compute biodiversity outcomes per ha\nbiodiversity_agroforestry <- tree_species_richness - grazing_species_loss\nbiodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect\n\n# Calculate difference (decision impact of trees)\n# measures the financial difference when switching to trees\ntotal_profits <- total_profits_agroforestry - total_profits_treeless\n\n# Calculate difference (decision impact of trees on biodiversity)\n# measures the net gain/loss in biodiversity from switching to trees\nbiodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless\n\n# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)\nbiodiversity_value_per_species <- 500  # Assume each additional species is worth €500\n\n# Compute a combined utility function\nutility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)", 
+        opts = list(label = "\"biodiversity_variables\"", exercise = "TRUE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = structure(c("", "# Define species richness and grazing impact factors per hectare", 
+    "species_richness_per_tree <- 0.01  # Each tree adds 0.001 species per ha", 
+    "species_loss_per_sheep <- 0.001  # Each sheep reduces 0.001 species per ha", 
+    "", "# Calculate biodiversity per ha", "tree_species_richness <- tree_density * species_richness_per_tree", 
+    "grazing_species_loss <- stocking_density * species_loss_per_sheep", 
+    "", "# Compute biodiversity outcomes per ha", "biodiversity_agroforestry <- tree_species_richness - grazing_species_loss", 
+    "biodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect", 
+    "", "# Calculate difference (decision impact of trees)", 
+    "# measures the financial difference when switching to trees", 
+    "total_profits <- total_profits_agroforestry - total_profits_treeless", 
+    "", "# Calculate difference (decision impact of trees on biodiversity)", 
+    "# measures the net gain/loss in biodiversity from switching to trees", 
+    "biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless", 
+    "", "# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)", 
+    "biodiversity_value_per_species <- 500  # Assume each additional species is worth €500", 
+    "", "# Compute a combined utility function", "utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)"
+    ), chunk_opts = list(label = "biodiversity_variables-solution")), 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Tutorial_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Tutorial_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, label = "biodiversity_variables", exercise = TRUE, 
+        code = c("", "# Define species richness and grazing impact factors per hectare", 
+        "species_richness_per_tree <- 0.05  # Each tree adds 0.05 species per ha", 
+        "species_loss_per_sheep <- 0.02  # Each sheep reduces 0.02 species per ha", 
+        "", "# Calculate biodiversity per ha", "tree_species_richness <- tree_density * species_richness_per_tree", 
+        "grazing_species_loss <- stocking_density * species_loss_per_sheep", 
+        "", "# Compute biodiversity outcomes per ha", "biodiversity_agroforestry <- tree_species_richness - grazing_species_loss", 
+        "biodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect", 
+        "", "# Calculate difference (decision impact of trees)", 
+        "# measures the financial difference when switching to trees", 
+        "total_profits <- total_profits_agroforestry - total_profits_treeless", 
+        "", "# Calculate difference (decision impact of trees on biodiversity)", 
+        "# measures the net gain/loss in biodiversity from switching to trees", 
+        "biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless", 
+        "", "# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)", 
+        "biodiversity_value_per_species <- 500  # Assume each additional species is worth €500", 
+        "", "# Compute a combined utility function", "utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)"
+        ), out.width.px = 624, out.height.px = 384, params.src = "biodiversity_variables, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-results_data-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-results_data-code-editor`)), session)
+output$`tutorial-exercise-results_data-output` <- renderUI({
+  `tutorial-exercise-results_data-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "results_data", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "results_data", code = "\nresults <- data.frame(\n  total_profits,\n  biodiversity_impact\n)\n\n# Scatter plot\nplot(results$biodiversity_impact, results$total_profits,\n     col = \"blue\", pch = 19, xlab = \"Biodiversity Impact (Species Change per ha)\",\n     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")", 
+        opts = list(label = "\"results_data\"", exercise = "TRUE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = structure(c("", "results <- data.frame(", 
+    "  total_profits,", "  biodiversity_impact", ")", "", "# Scatter plot", 
+    "plot(results$biodiversity_impact, results$total_profits,", 
+    "     col = \"green\", pch = 19, xlab = \"Biodiversity Impact (Species Change per ha)\",", 
+    "     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")"
+    ), chunk_opts = list(label = "results_data-solution")), tests = NULL, 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -780,18 +1016,12 @@ learnr:::store_exercise_cache(structure(list(label = "apple_sheep_model_function
         aniopts = "controls,loop", warning = TRUE, error = FALSE, 
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, label = "apple_sheep_model_function", 
-        exercise = TRUE, code = c("model_function <- function() {", 
-        "  AF_income <- sheep_income + apple_income", "  AF_cost <- sheep_cost + apple_cost", 
-        "  AF_final_result <- AF_income - AF_cost", "  sheep_only <- sheep_income - sheep_cost", 
-        "  Decision_benefit <- AF_final_result - sheep_only", 
-        "  ", "  AF_NPV <- discount(AF_final_result, discount_rate = discount_rate, calculate_NPV = TRUE)", 
-        "  NPV_sheep_only <- discount(sheep_only, discount_rate = discount_rate, calculate_NPV = TRUE)", 
-        "  NPV_decision <- discount(Decision_benefit, discount_rate = discount_rate, calculate_NPV = TRUE)", 
-        "  ", "  return(list(", "    NPV_Agroforestry_System = AF_NPV,", 
-        "    NPV_Treeless_System = NPV_sheep_only,", "    NPV_decision = NPV_decision", 
-        "  ))", "}"), out.width.px = 624, out.height.px = 384, 
-        params.src = "apple_sheep_model_function, exercise=TRUE", 
+        max.print = 1000, label = "results_data", exercise = TRUE, 
+        code = c("", "results <- data.frame(", "  total_profits,", 
+        "  biodiversity_impact", ")", "", "# Scatter plot", "plot(results$biodiversity_impact, results$total_profits,", 
+        "     col = \"blue\", pch = 19, xlab = \"Biodiversity Impact (Species Change per ha)\",", 
+        "     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")"
+        ), out.width.px = 624, out.height.px = 384, params.src = "results_data, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
@@ -799,23 +1029,33 @@ learnr:::store_exercise_cache(structure(list(label = "apple_sheep_model_function
 
 
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-apple_sheep_mc-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-apple_sheep_mc-code-editor`)), session)
-output$`tutorial-exercise-apple_sheep_mc-output` <- renderUI({
-  `tutorial-exercise-apple_sheep_mc-result`()
+`tutorial-exercise-pareto_points-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-pareto_points-code-editor`)), session)
+output$`tutorial-exercise-pareto_points-output` <- renderUI({
+  `tutorial-exercise-pareto_points-result`()
 })
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache(structure(list(label = "apple_sheep_mc", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
-"source(\"functions/monte_carlo.R\")", "source(\"functions/apples_sheep_in_class.R\")"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "apple_sheep_mc", code = "apple_sheep_mc_simulation <- mcSimulation(\n  estimate = as.estimate(input_estimates),\n  model_function = model_function,\n  numberOfModelRuns = 100,\n  functionSyntax = \"plainNames\"\n)", 
-        opts = list(label = "\"apple_sheep_mc\"", exercise = "TRUE"), 
+learnr:::store_exercise_cache(structure(list(label = "pareto_points", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "pareto_points", code = "\n# Sort results by biodiversity impact\nresults <- results[order(results$biodiversity_impact, decreasing = TRUE),]\n\n# Initialize Pareto front\npareto_front <- results[1, ]  # Start with the first point\n\n# Loop through sorted results and keep only non-dominated points\nfor (i in 2:nrow(results)) {\n  if (results$total_profits[i] > tail(pareto_front$total_profits, 1)) {\n    pareto_front <- rbind(pareto_front, results[i, ])\n  }\n}\n\n# Plot all points\nplot(results$biodiversity_impact, results$total_profits,\n     col = \"green\", pch = 19, xlab = \"Biodiversity Impact (Species Change per ha)\",\n     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")\n\n# Highlight Pareto front points\npoints(pareto_front$biodiversity_impact, pareto_front$total_profits,\n       col = \"red\", pch = 19, type = \"o\", lwd = 2)", 
+        opts = list(label = "\"pareto_points\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = structure(c("apple_sheep_mc_simulation <- mcSimulation(", 
-    "  estimate = as.estimate(input_estimates),", "  model_function = model_function,", 
-    "  numberOfModelRuns = 1000,", "  functionSyntax = \"plainNames\"", 
-    ")"), chunk_opts = list(label = "apple_sheep_mc-solution")), 
+    check = NULL, solution = structure(c("", "# Sort results by biodiversity impact", 
+    "results <- results[order(results$biodiversity_impact, decreasing = TRUE),]", 
+    "", "# Initialize Pareto front", "pareto_front <- results[1, ]  # Start with the first point", 
+    "", "# Loop through sorted results and keep only non-dominated points", 
+    "for (i in 2:nrow(results)) {", "  if (results$total_profits[i] > tail(pareto_front$total_profits, 1)) {", 
+    "    pareto_front <- rbind(pareto_front, results[i, ])", 
+    "  }", "}", "", "# Plot all points", "plot(results$biodiversity_impact, results$total_profits,", 
+    "     col = \"green\", pch = 19, xlab = \"Biodiversity Impact (Species Change per ha)\",", 
+    "     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")", 
+    "", "# Highlight Pareto front points", "points(pareto_front$biodiversity_impact, pareto_front$total_profits,", 
+    "       col = \"blue\", pch = 19, type = \"o\", lwd = 2)"
+    ), chunk_opts = list(label = "pareto_points-solution")), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -832,11 +1072,19 @@ learnr:::store_exercise_cache(structure(list(label = "apple_sheep_mc", global_se
         aniopts = "controls,loop", warning = TRUE, error = FALSE, 
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, label = "apple_sheep_mc", exercise = TRUE, 
-        code = c("apple_sheep_mc_simulation <- mcSimulation(", 
-        "  estimate = as.estimate(input_estimates),", "  model_function = model_function,", 
-        "  numberOfModelRuns = 100,", "  functionSyntax = \"plainNames\"", 
-        ")"), out.width.px = 624, out.height.px = 384, params.src = "apple_sheep_mc, exercise=TRUE", 
+        max.print = 1000, label = "pareto_points", exercise = TRUE, 
+        code = c("", "# Sort results by biodiversity impact", 
+        "results <- results[order(results$biodiversity_impact, decreasing = TRUE),]", 
+        "", "# Initialize Pareto front", "pareto_front <- results[1, ]  # Start with the first point", 
+        "", "# Loop through sorted results and keep only non-dominated points", 
+        "for (i in 2:nrow(results)) {", "  if (results$total_profits[i] > tail(pareto_front$total_profits, 1)) {", 
+        "    pareto_front <- rbind(pareto_front, results[i, ])", 
+        "  }", "}", "", "# Plot all points", "plot(results$biodiversity_impact, results$total_profits,", 
+        "     col = \"green\", pch = 19, xlab = \"Biodiversity Impact (Species Change per ha)\",", 
+        "     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")", 
+        "", "# Highlight Pareto front points", "points(pareto_front$biodiversity_impact, pareto_front$total_profits,", 
+        "       col = \"red\", pch = 19, type = \"o\", lwd = 2)"
+        ), out.width.px = 624, out.height.px = 384, params.src = "pareto_points, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
@@ -844,22 +1092,30 @@ learnr:::store_exercise_cache(structure(list(label = "apple_sheep_mc", global_se
 
 
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-evpi_calc-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-evpi_calc-code-editor`)), session)
-output$`tutorial-exercise-evpi_calc-output` <- renderUI({
-  `tutorial-exercise-evpi_calc-result`()
+`tutorial-exercise-pareto_conditions-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-pareto_conditions-code-editor`)), session)
+output$`tutorial-exercise-pareto_conditions-output` <- renderUI({
+  `tutorial-exercise-pareto_conditions-result`()
 })
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache(structure(list(label = "evpi_calc", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
-"source(\"functions/monte_carlo.R\")", "source(\"functions/apples_sheep_in_class.R\")"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "evpi_calc", code = "mcSimulation_table <- data.frame(apple_sheep_mc_simulation$x, apple_sheep_mc_simulation$y[3])\nevpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = \"NPV_decision\")\nevpi", 
-        opts = list(label = "\"evpi_calc\"", exercise = "TRUE"), 
+learnr:::store_exercise_cache(structure(list(label = "pareto_conditions", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "pareto_conditions", code = "\n# Extract operational conditions for Pareto-optimal points\npareto_conditions <- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &\n                               results$total_profits %in% pareto_front$total_profits,]\n\n# Merge with original dataset to include operational variables\npareto_conditions <- merge(pareto_conditions, data.frame(\n  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),\n  by = c(\"biodiversity_impact\", \"total_profits\"))\n\n# Show Pareto-optimal conditions\nprint(pareto_conditions)", 
+        opts = list(label = "\"pareto_conditions\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = structure(c("mcSimulation_table <- data.frame(apple_sheep_mc_simulation$x, apple_sheep_mc_simulation$y[3])", 
-    "evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = \"NPV_decision\")", 
-    "evpi"), chunk_opts = list(label = "evpi_calc-solution")), 
+    check = NULL, solution = structure(c("", "# Extract operational conditions for Pareto-optimal points", 
+    "pareto_conditions <- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &", 
+    "                               results$total_profits %in% pareto_front$total_profits,]", 
+    "", "# Merge with original dataset to include operational variables", 
+    "pareto_conditions <- merge(pareto_conditions, data.frame(", 
+    "  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),", 
+    "  by = c(\"biodiversity_impact\", \"total_profits\"))", 
+    "", "# Show Pareto-optimal conditions", "print(pareto_conditions)"
+    ), chunk_opts = list(label = "pareto_conditions-solution")), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -876,10 +1132,16 @@ learnr:::store_exercise_cache(structure(list(label = "evpi_calc", global_setup =
         aniopts = "controls,loop", warning = TRUE, error = FALSE, 
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, label = "evpi_calc", exercise = TRUE, 
-        code = c("mcSimulation_table <- data.frame(apple_sheep_mc_simulation$x, apple_sheep_mc_simulation$y[3])", 
-        "evpi <- multi_EVPI(mc = mcSimulation_table, first_out_var = \"NPV_decision\")", 
-        "evpi"), out.width.px = 624, out.height.px = 384, params.src = "evpi_calc, exercise=TRUE", 
+        max.print = 1000, label = "pareto_conditions", exercise = TRUE, 
+        code = c("", "# Extract operational conditions for Pareto-optimal points", 
+        "pareto_conditions <- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &", 
+        "                               results$total_profits %in% pareto_front$total_profits,]", 
+        "", "# Merge with original dataset to include operational variables", 
+        "pareto_conditions <- merge(pareto_conditions, data.frame(", 
+        "  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),", 
+        "  by = c(\"biodiversity_impact\", \"total_profits\"))", 
+        "", "# Show Pareto-optimal conditions", "print(pareto_conditions)"
+        ), out.width.px = 624, out.height.px = 384, params.src = "pareto_conditions, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
@@ -887,33 +1149,45 @@ learnr:::store_exercise_cache(structure(list(label = "evpi_calc", global_setup =
 
 
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-pareto_analysis-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-pareto_analysis-code-editor`)), session)
-output$`tutorial-exercise-pareto_analysis-output` <- renderUI({
-  `tutorial-exercise-pareto_analysis-result`()
+`tutorial-exercise-plot_pareto-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-plot_pareto-code-editor`)), session)
+output$`tutorial-exercise-plot_pareto-output` <- renderUI({
+  `tutorial-exercise-plot_pareto-result`()
 })
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache(structure(list(label = "pareto_analysis", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
-"source(\"functions/monte_carlo.R\")", "source(\"functions/apples_sheep_in_class.R\")"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "pareto_analysis", code = "decision1 <- apple_sheep_mc_simulation$y$NPV_Agroforestry_System\ndecision2 <- apple_sheep_mc_simulation$y$NPV_Treeless_System\n\nggplot(data.frame(decision1, decision2), aes(x=decision1, y=decision2)) +\n  geom_point(alpha=0.2, color=\"blue\") +\n  labs(title=\"Pareto Front: Agroforestry vs Treeless System\",\n       x=\"Agroforestry System (NPV)\", y=\"Treeless System (NPV)\")", 
-        opts = list(label = "\"pareto_analysis\"", exercise = "TRUE"), 
+learnr:::store_exercise_cache(structure(list(label = "plot_pareto", global_setup = structure(c("knitr::opts_chunk$set(echo = TRUE)", 
+"", "library(decisionSupport)", "library(ggplot2)", "library(learnr)", 
+"library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
+"source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "plot_pareto", code = "# Determine dynamic position based on plot coordinates\ntext_positions <- ifelse(\n  pareto_front$biodiversity_impact > median(pareto_front$biodiversity_impact), 2, 4\n)\n\n# Adjust for very high or low points\ntext_positions <- ifelse(\n  pareto_front$total_profits > quantile(pareto_front$total_profits, 0.75), 1, text_positions\n)\ntext_positions <- ifelse(\n  pareto_front$total_profits < quantile(pareto_front$total_profits, 0.25), 3, text_positions\n)\n\n# Plot Pareto front\nplot(pareto_front$biodiversity_impact, pareto_front$total_profits,\n     col = \"red\", pch = 19, type = \"o\", lwd = 2,\n     xlab = \"Biodiversity Impact (Species Change per ha)\",\n     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")\n\n# Add footnote at the bottom\nmtext(\"S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area\", \n      side = 1, line = 4, cex = 0.8)\n\n# Create multi-line labels with line breaks\nlabels <- paste0(\"S:\", round(pareto_conditions$stocking_density, 1), \"\\n\",\n                 \"T:\", round(pareto_conditions$tree_density, 1), \"\\n\",\n                 \"P:\", round(pareto_conditions$proportion_tree_area, 2))\n\n# Annotate with dynamically positioned text\ntext(pareto_front$biodiversity_impact, pareto_front$total_profits,\n     labels = labels, pos = text_positions, cex = 0.8)", 
+        opts = list(label = "\"plot_pareto\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = structure(c("decision1 <- apple_sheep_mc_simulation$y$NPV_Agroforestry_System", 
-    "decision2 <- apple_sheep_mc_simulation$y$NPV_Treeless_System", 
-    "", "ggplot(data.frame(decision1, decision2), aes(x=decision1, y=decision2)) +", 
-    "  geom_point(alpha=0.2, color=\"blue\") +", "  labs(title=\"Pareto Front: Agroforestry vs Treeless System\",", 
-    "       x=\"Agroforestry System (NPV)\", y=\"Treeless System (NPV)\")"
-    ), chunk_opts = list(label = "pareto_analysis-solution")), 
-    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, size = "normalsize", 
-        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Tutorial_cache/html/", cache.vars = NULL, 
-        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
-        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Tutorial_files/figure-html/", 
+    check = NULL, solution = structure(c("# Determine dynamic position based on plot coordinates", 
+    "text_positions <- ifelse(", "  pareto_front$biodiversity_impact > median(pareto_front$biodiversity_impact), 2, 4", 
+    ")", "", "# Adjust for very high or low points", "text_positions <- ifelse(", 
+    "  pareto_front$total_profits > quantile(pareto_front$total_profits, 0.75), 1, text_positions", 
+    ")", "text_positions <- ifelse(", "  pareto_front$total_profits < quantile(pareto_front$total_profits, 0.25), 3, text_positions", 
+    ")", "", "# Plot Pareto front", "plot(pareto_front$biodiversity_impact, pareto_front$total_profits,", 
+    "     col = \"blue\", pch = 19, type = \"o\", lwd = 2,", 
+    "     xlab = \"Biodiversity Impact (Species Change per ha)\",", 
+    "     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")", 
+    "", "# Add footnote at the bottom", "mtext(\"S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area\", ", 
+    "      side = 1, line = 4, cex = 0.8)", "", "# Create multi-line labels with line breaks", 
+    "labels <- paste0(\"S:\", round(pareto_conditions$stocking_density, 1), \"\\n\",", 
+    "                 \"T:\", round(pareto_conditions$tree_density, 1), \"\\n\",", 
+    "                 \"P:\", round(pareto_conditions$proportion_tree_area, 2))", 
+    "", "# Annotate with dynamically positioned text", "text(pareto_front$biodiversity_impact, pareto_front$total_profits,", 
+    "     labels = labels, pos = text_positions, cex = 0.8)"), chunk_opts = list(
+        label = "plot_pareto-solution")), tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Tutorial_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Tutorial_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -922,13 +1196,24 @@ learnr:::store_exercise_cache(structure(list(label = "pareto_analysis", global_s
         aniopts = "controls,loop", warning = TRUE, error = FALSE, 
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
-        max.print = 1000, label = "pareto_analysis", exercise = TRUE, 
-        code = c("decision1 <- apple_sheep_mc_simulation$y$NPV_Agroforestry_System", 
-        "decision2 <- apple_sheep_mc_simulation$y$NPV_Treeless_System", 
-        "", "ggplot(data.frame(decision1, decision2), aes(x=decision1, y=decision2)) +", 
-        "  geom_point(alpha=0.2, color=\"blue\") +", "  labs(title=\"Pareto Front: Agroforestry vs Treeless System\",", 
-        "       x=\"Agroforestry System (NPV)\", y=\"Treeless System (NPV)\")"
-        ), out.width.px = 624, out.height.px = 384, params.src = "pareto_analysis, exercise=TRUE", 
+        max.print = 1000, label = "plot_pareto", exercise = TRUE, 
+        code = c("# Determine dynamic position based on plot coordinates", 
+        "text_positions <- ifelse(", "  pareto_front$biodiversity_impact > median(pareto_front$biodiversity_impact), 2, 4", 
+        ")", "", "# Adjust for very high or low points", "text_positions <- ifelse(", 
+        "  pareto_front$total_profits > quantile(pareto_front$total_profits, 0.75), 1, text_positions", 
+        ")", "text_positions <- ifelse(", "  pareto_front$total_profits < quantile(pareto_front$total_profits, 0.25), 3, text_positions", 
+        ")", "", "# Plot Pareto front", "plot(pareto_front$biodiversity_impact, pareto_front$total_profits,", 
+        "     col = \"red\", pch = 19, type = \"o\", lwd = 2,", 
+        "     xlab = \"Biodiversity Impact (Species Change per ha)\",", 
+        "     ylab = \"Total Profits (€ per ha)\", main = \"Pareto Front: Agroforestry vs. Treeless System\")", 
+        "", "# Add footnote at the bottom", "mtext(\"S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area\", ", 
+        "      side = 1, line = 4, cex = 0.8)", "", "# Create multi-line labels with line breaks", 
+        "labels <- paste0(\"S:\", round(pareto_conditions$stocking_density, 1), \"\\n\",", 
+        "                 \"T:\", round(pareto_conditions$tree_density, 1), \"\\n\",", 
+        "                 \"P:\", round(pareto_conditions$proportion_tree_area, 2))", 
+        "", "# Annotate with dynamically positioned text", "text(pareto_front$biodiversity_impact, pareto_front$total_profits,", 
+        "     labels = labels, pos = text_positions, cex = 0.8)"
+        ), out.width.px = 624, out.height.px = 384, params.src = "plot_pareto, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
@@ -936,7 +1221,7 @@ learnr:::store_exercise_cache(structure(list(label = "pareto_analysis", global_s
 </p>
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
-{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.29"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["21.6.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (all exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>It looks like your R code contains specially formatted quotation marks or &quot;curly&quot; quotes (<code>{{character}}<\\/code>) around character strings, making your code invalid. R requires character values to be contained in straight quotation marks (<code>&quot;<\\/code> or <code>'<\\/code>).<\\/p> {{code}} <p>Don't worry, this is a common source of errors when you copy code from another app that applies its own formatting to text. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. Try deleting the special character from your code and retyping it manually.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}},\"de\":{\"translation\":{\"button\":{\"runcode\":\"Code ausführen\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Tipp\",\"hint_plural\":\"Tipps\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Nächster Tipp\",\"hintprev\":\"Vorheriger Tipp\",\"solution\":\"Lösung\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"In die Zwischenablage kopieren\",\"startover\":\"Neustart\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Weiter\",\"submitanswer\":\"Antwort einreichen\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Vorheriges Kapitel\",\"nexttopic\":\"Nächstes Kapitel\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Nochmal versuchen\"},\"text\":{\"startover\":\"Neustart\",\"areyousure\":\"Bist du sicher, dass du neustarten willst? (der gesamte Lernfortschritt wird gelöscht)\",\"youmustcomplete\":\"Vervollstädinge\",\"exercise\":\"die Übung\",\"exercise_plural\":\"die Übungen\",\"inthissection\":\"in diesem Kapitel, bevor du fortfährst.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"Lücke\",\"blank_plural\":\"Lücken\",\"pleasereplaceblank\":\"Bitte ersetze {{blank}} mit gültigem Code.\",\"unparsable\":\"Dies scheint kein gültiger R Code zu sein. R kann deinen Text nicht in einen gültigen Befehl übersetzen. Du hast vielleicht vergessen, die Lücke zu füllen, einen Unterstrich zu entfernen, ein Komma zwischen Argumente zu setzen oder ein eröffnendes <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> oder <code>{<\\/code> mit einem zugehörigen <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> oder <code>}<\\/code> zu schließen.\\n\",\"and\":\"und\",\"or\":\"oder\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"ko\":{\"translation\":{\"button\":{\"runcode\":\"코드 실행\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"힌트\",\"hint_plural\":\"힌트들\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"다음 힌트\",\"hintprev\":\"이전 힌트\",\"solution\":\"솔루션\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"클립보드에 복사\",\"startover\":\"재학습\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"다음 학습으로\",\"submitanswer\":\"정답 제출\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"이전 토픽\",\"nexttopic\":\"다음 토픽\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"재시도\"},\"text\":{\"startover\":\"재학습\",\"areyousure\":\"다시 시작 하시겠습니까? (모든 예제의 진행 정보가 재설정됩니다)\",\"youmustcomplete\":\"당신은 완료해야 합니다\",\"exercise\":\"연습문제\",\"exercise_plural\":\"연습문제들\",\"inthissection\":\"이 섹션을 실행하기 전에\",\"code\":\"코드\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"퀴즈\",\"blank\":\"공백\",\"blank_plural\":\"공백들\",\"exercisecontainsblank\":\"이 연습문제에는 {{count}}개의 $t(text.blank)이 포함되어 있습니다.\",\"pleasereplaceblank\":\"{{blank}}를 유효한 코드로 바꾸십시오.\",\"unparsable\":\"이것은 유효한 R 코드가 아닐 수 있습니다. R은 텍스트를 완전한 명령으로 변환하는 방법을 결정할 수 없습니다. 당신은 공백이나 밑줄을 대체하여 채우기, 인수를 컴마로 구분하기, 또는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> , <code>{<\\/code>로 시작하는 구문을 닫는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>, <code>}<\\/code>을 잊었을 수도 있습니다.\\n\",\"and\":\"그리고\",\"or\":\"혹은\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"zh\":{\"translation\":{\"button\":{\"runcode\":\"运行代码\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"提示\",\"hint_plural\":\"提示\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"下一个提示\",\"hintprev\":\"上一个提示\",\"solution\":\"答案\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"复制到剪切板\",\"startover\":\"重新开始\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"继续\",\"submitanswer\":\"提交答案\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"上一专题\",\"nexttopic\":\"下一专题\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"再试一次\"},\"text\":{\"startover\":\"重置\",\"areyousure\":\"你确定要重新开始吗? (所有当前进度将被重置)\",\"youmustcomplete\":\"你必须完成\",\"exercise\":\"练习\",\"exercise_plural\":\"练习\",\"inthissection\":\"在进行本节之前\",\"code\":\"代码\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"测试\",\"blank\":\"空\",\"blank_plural\":\"空\",\"exercisecontainsblank\":\"本练习包含{{count}}个$t(text.blank)\",\"pleasereplaceblank\":\"请在{{blank}}内填写恰当的代码\",\"unparsable\":\"这似乎不是有效的R代码。 R不知道如何将您的文本转换为完整的命令。 您是否忘了填空，忘了删除下划线，忘了在参数之间包含逗号，或者是忘了用<code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>,<code>}<\\/code>来封闭<code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code>。 or <code>{<\\/code>。\\n\",\"unparsablequotes\":\"<p>您的R代码中似乎含有特殊格式的引号，或者弯引号(<code>{{character}}<\\/code>) 在字符串前后，在R中字符串应该被直引号(<code>&quot;<\\/code> 或者 <code>'<\\/code>)包裹。<\\/p> {{code}} <p>别担心，该错误经常在复制粘贴包含格式的代码时遇到， 您可以尝试将该行中的代码替换为以下代码，也许还有其他地方需要修改。<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"and\":\"且\",\"or\":\"或\",\"listcomma\":\",\",\"oxfordcomma\":\",\"}}},\"pl\":{\"translation\":{\"button\":{\"runcode\":\"Uruchom kod\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Podpowiedź\",\"hint_plural\":\"Podpowiedzi\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Następna podpowiedź\",\"hintprev\":\"Poprzednia podpowiedź\",\"solution\":\"Rozwiązanie\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopiuj do schowka\",\"startover\":\"Zacznij od początku\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Kontynuuj\",\"submitanswer\":\"Wyślij\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Poprzednia sekcja\",\"nexttopic\":\"Następna sekcja\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Spróbuj ponownie\"},\"text\":{\"startover\":\"Zacznij od początku\",\"areyousure\":\"Czy na pewno chcesz zacząć od początku? (cały postęp w zadaniu zostanie utracony)\",\"youmustcomplete\":\"Musisz ukończyć\",\"exercise\":\"ćwiczenie\",\"exercise_plural\":\"ćwiczenia\",\"inthissection\":\"w tej sekcji przed kontynuowaniem\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"luka\",\"blank_plural\":\"luk(i)\",\"exercisecontainsblank\":\"To ćwiczenie zawiera {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Proszę uzupełnić {{blank}} prawidłowym kodem.\",\"unparsable\":\"Wygląda na to, że może to nie być prawidłowy kod R. R nie jest w stanie przetworzyć Twojego tekstu na polecenie. Mogłeś(-aś) zapomnieć wypełnić luki, usunąć podkreślnik, umieścić przecinka między argumentami, lub zamknąć znak <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> lub <code>{<\\/code> odpowiadającym <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> lub <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Wygląda na to, że Twój kod zawiera szczególnie sformatowane cudzysłowy lub cudzysłowy typograficzne (<code>{{character}}<\\/code>) przy ciągach znaków, co sprawia, że kod jest niepoprawny. R wymaga cudzysłowów prostych (<code>&quot;<\\/code> albo <code>'<\\/code>).<\\/p> {{code}} <p>Nie martw się, to powszechne źródło błędów, gdy kopiuje się kod z innego programu, który sam formatuje teskt. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Spróbuj usunąć znak specjalny i wpisać do ponownie ręcznie.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"and\":\"i\",\"or\":\"lub\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["6.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.min.css","css/v4-shims.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fontawesome"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["5.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]}]}
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.29"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["21.6.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (all exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>It looks like your R code contains specially formatted quotation marks or &quot;curly&quot; quotes (<code>{{character}}<\\/code>) around character strings, making your code invalid. R requires character values to be contained in straight quotation marks (<code>&quot;<\\/code> or <code>'<\\/code>).<\\/p> {{code}} <p>Don't worry, this is a common source of errors when you copy code from another app that applies its own formatting to text. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. Try deleting the special character from your code and retyping it manually.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}},\"de\":{\"translation\":{\"button\":{\"runcode\":\"Code ausführen\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Tipp\",\"hint_plural\":\"Tipps\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Nächster Tipp\",\"hintprev\":\"Vorheriger Tipp\",\"solution\":\"Lösung\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"In die Zwischenablage kopieren\",\"startover\":\"Neustart\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Weiter\",\"submitanswer\":\"Antwort einreichen\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Vorheriges Kapitel\",\"nexttopic\":\"Nächstes Kapitel\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Nochmal versuchen\"},\"text\":{\"startover\":\"Neustart\",\"areyousure\":\"Bist du sicher, dass du neustarten willst? (der gesamte Lernfortschritt wird gelöscht)\",\"youmustcomplete\":\"Vervollstädinge\",\"exercise\":\"die Übung\",\"exercise_plural\":\"die Übungen\",\"inthissection\":\"in diesem Kapitel, bevor du fortfährst.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"Lücke\",\"blank_plural\":\"Lücken\",\"pleasereplaceblank\":\"Bitte ersetze {{blank}} mit gültigem Code.\",\"unparsable\":\"Dies scheint kein gültiger R Code zu sein. R kann deinen Text nicht in einen gültigen Befehl übersetzen. Du hast vielleicht vergessen, die Lücke zu füllen, einen Unterstrich zu entfernen, ein Komma zwischen Argumente zu setzen oder ein eröffnendes <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> oder <code>{<\\/code> mit einem zugehörigen <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> oder <code>}<\\/code> zu schließen.\\n\",\"and\":\"und\",\"or\":\"oder\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"ko\":{\"translation\":{\"button\":{\"runcode\":\"코드 실행\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"힌트\",\"hint_plural\":\"힌트들\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"다음 힌트\",\"hintprev\":\"이전 힌트\",\"solution\":\"솔루션\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"클립보드에 복사\",\"startover\":\"재학습\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"다음 학습으로\",\"submitanswer\":\"정답 제출\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"이전 토픽\",\"nexttopic\":\"다음 토픽\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"재시도\"},\"text\":{\"startover\":\"재학습\",\"areyousure\":\"다시 시작 하시겠습니까? (모든 예제의 진행 정보가 재설정됩니다)\",\"youmustcomplete\":\"당신은 완료해야 합니다\",\"exercise\":\"연습문제\",\"exercise_plural\":\"연습문제들\",\"inthissection\":\"이 섹션을 실행하기 전에\",\"code\":\"코드\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"퀴즈\",\"blank\":\"공백\",\"blank_plural\":\"공백들\",\"exercisecontainsblank\":\"이 연습문제에는 {{count}}개의 $t(text.blank)이 포함되어 있습니다.\",\"pleasereplaceblank\":\"{{blank}}를 유효한 코드로 바꾸십시오.\",\"unparsable\":\"이것은 유효한 R 코드가 아닐 수 있습니다. R은 텍스트를 완전한 명령으로 변환하는 방법을 결정할 수 없습니다. 당신은 공백이나 밑줄을 대체하여 채우기, 인수를 컴마로 구분하기, 또는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> , <code>{<\\/code>로 시작하는 구문을 닫는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>, <code>}<\\/code>을 잊었을 수도 있습니다.\\n\",\"and\":\"그리고\",\"or\":\"혹은\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"zh\":{\"translation\":{\"button\":{\"runcode\":\"运行代码\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"提示\",\"hint_plural\":\"提示\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"下一个提示\",\"hintprev\":\"上一个提示\",\"solution\":\"答案\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"复制到剪切板\",\"startover\":\"重新开始\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"继续\",\"submitanswer\":\"提交答案\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"上一专题\",\"nexttopic\":\"下一专题\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"再试一次\"},\"text\":{\"startover\":\"重置\",\"areyousure\":\"你确定要重新开始吗? (所有当前进度将被重置)\",\"youmustcomplete\":\"你必须完成\",\"exercise\":\"练习\",\"exercise_plural\":\"练习\",\"inthissection\":\"在进行本节之前\",\"code\":\"代码\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"测试\",\"blank\":\"空\",\"blank_plural\":\"空\",\"exercisecontainsblank\":\"本练习包含{{count}}个$t(text.blank)\",\"pleasereplaceblank\":\"请在{{blank}}内填写恰当的代码\",\"unparsable\":\"这似乎不是有效的R代码。 R不知道如何将您的文本转换为完整的命令。 您是否忘了填空，忘了删除下划线，忘了在参数之间包含逗号，或者是忘了用<code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>,<code>}<\\/code>来封闭<code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code>。 or <code>{<\\/code>。\\n\",\"unparsablequotes\":\"<p>您的R代码中似乎含有特殊格式的引号，或者弯引号(<code>{{character}}<\\/code>) 在字符串前后，在R中字符串应该被直引号(<code>&quot;<\\/code> 或者 <code>'<\\/code>)包裹。<\\/p> {{code}} <p>别担心，该错误经常在复制粘贴包含格式的代码时遇到， 您可以尝试将该行中的代码替换为以下代码，也许还有其他地方需要修改。<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"and\":\"且\",\"or\":\"或\",\"listcomma\":\",\",\"oxfordcomma\":\",\"}}},\"pl\":{\"translation\":{\"button\":{\"runcode\":\"Uruchom kod\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Podpowiedź\",\"hint_plural\":\"Podpowiedzi\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Następna podpowiedź\",\"hintprev\":\"Poprzednia podpowiedź\",\"solution\":\"Rozwiązanie\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopiuj do schowka\",\"startover\":\"Zacznij od początku\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Kontynuuj\",\"submitanswer\":\"Wyślij\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Poprzednia sekcja\",\"nexttopic\":\"Następna sekcja\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Spróbuj ponownie\"},\"text\":{\"startover\":\"Zacznij od początku\",\"areyousure\":\"Czy na pewno chcesz zacząć od początku? (cały postęp w zadaniu zostanie utracony)\",\"youmustcomplete\":\"Musisz ukończyć\",\"exercise\":\"ćwiczenie\",\"exercise_plural\":\"ćwiczenia\",\"inthissection\":\"w tej sekcji przed kontynuowaniem\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"luka\",\"blank_plural\":\"luk(i)\",\"exercisecontainsblank\":\"To ćwiczenie zawiera {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Proszę uzupełnić {{blank}} prawidłowym kodem.\",\"unparsable\":\"Wygląda na to, że może to nie być prawidłowy kod R. R nie jest w stanie przetworzyć Twojego tekstu na polecenie. Mogłeś(-aś) zapomnieć wypełnić luki, usunąć podkreślnik, umieścić przecinka między argumentami, lub zamknąć znak <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> lub <code>{<\\/code> odpowiadającym <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> lub <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Wygląda na to, że Twój kod zawiera szczególnie sformatowane cudzysłowy lub cudzysłowy typograficzne (<code>{{character}}<\\/code>) przy ciągach znaków, co sprawia, że kod jest niepoprawny. R wymaga cudzysłowów prostych (<code>&quot;<\\/code> albo <code>'<\\/code>).<\\/p> {{code}} <p>Nie martw się, to powszechne źródło błędów, gdy kopiuje się kod z innego programu, który sam formatuje teskt. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Spróbuj usunąć znak specjalny i wpisać do ponownie ręcznie.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"and\":\"i\",\"or\":\"lub\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.29"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["6.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.min.css","css/v4-shims.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fontawesome"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["5.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5"]}]}]}
 </script>
 <!--/html_preserve-->
 <!--html_preserve-->
@@ -959,7 +1244,7 @@ learnr:::store_exercise_cache(structure(list(label = "pareto_analysis", global_s
 <h1 class="title toc-ignore" style="display:none;">Decision Modeling for
 Agroecology &amp; Conservation</h1>
 <h4 class="author"><em>Cory Whitney</em></h4>
-<h4 class="date"><em>2025-03-15</em></h4>
+<h4 class="date"><em>2025-03-18</em></h4>
 </div>
 <!-- end doc-metadata -->
 
