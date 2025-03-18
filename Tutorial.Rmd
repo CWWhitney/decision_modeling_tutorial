@@ -42,9 +42,7 @@ textInput("intro_question", "What do you already know about decision modeling?",
 
 ## **1. Decision Modeling in Agroecology**
 
-- **Application of decision modeling in agroecology**
-- **The role of expert knowledge**
-- **Decision structuring** 
+Decision-making in agroecology often requires navigating trade-offs, for example between productivity and biodiversity. Decisions are further complicated by system complexity and uncertainty, i.e. the impacts of climate variability or market fluctuations. In this section, we will explore why decision modeling matters for agroecology, how it can guide sustainable land management, and what tools can help us make informed decisions.
 
 ```{r question1, echo=FALSE}
 quiz(
@@ -553,6 +551,12 @@ Thanks for following this tutorial. As thanks, here is an open space for running
 ```{r blank, exercise=TRUE}
 
 ```
+
+---
+
+## References
+
+Whitney, C, K Shepherd, and E Luedeling. “Decision Analysis Methods Guide; Agricultural Policy for Nutrition.” World Agroforestry (ICRAF) Working Paper series, no. 275 (2018): 40. http://dx.doi.org/10.5716/WP18001.PDF.
 
 
 
