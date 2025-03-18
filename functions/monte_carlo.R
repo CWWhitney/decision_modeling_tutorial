@@ -1,8 +1,4 @@
-library(decisionSupport)
-library(ggplot2)
-library(learnr)
-library(shiny)
-library(DiagrammeR)
+
 
 # Apple sheep estimates
 
