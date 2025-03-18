@@ -21,6 +21,8 @@ source("functions/apple_sheep_pareto.R")
 
 ```
 
+---
+
 # **Introduction**
 
 Welcome to the interactive tutorial on **Decision Modeling for Agroecology & Conservation**. 
@@ -32,6 +34,11 @@ This tutorial will guide you through:
 - **Monte Carlo simulation** for decision-making
 - **Expert-elicited probabilities** and model validation
 - **Evaluating models** with EVPI and Pareto-optimality
+
+```{r question0, echo=FALSE}
+textInput("intro_question", "What do you already know about decision modeling?", placeholder="Write a short response...")
+```
+
 
 ---
 
@@ -82,6 +89,26 @@ Sketch out a decision model on a piece of paper and share with us.
 
 ```{r upload_model, echo=FALSE}
 fileInput("model_upload", "Upload your decision model (optional)", accept = c("image/png", "image/jpeg"))
+```
+
+```{r}
+DiagrammeR::grViz("
+digraph decision_model {
+  # Define node styles
+  node [shape=box, style=filled, fillcolor=lightblue] Decision;
+  node [shape=ellipse, style=filled, fillcolor=lightgrey] Apple_Income Sheep_Income Costs;
+  node [shape=ellipse, style=filled, fillcolor=green] Outcome_Profit;
+
+  # Define relationships
+  Decision -> Apple_Income;
+  Decision -> Sheep_Income;
+  Decision -> Costs;
+  Costs -> Apple_Income;
+  Costs -> Sheep_Income;
+  Apple_Income -> Outcome_Profit;
+  Sheep_Income -> Outcome_Profit;
+}
+")
 ```
 
 ---
@@ -170,6 +197,15 @@ hist(sheep_profits, add = TRUE, col = "black")
 hist(total_profits, col = "white")
 hist(apple_profits, add = TRUE, col = "grey")
 hist(sheep_profits, add = TRUE, col = "black")
+```
+
+```{r question2, echo=FALSE}
+quiz(
+  question("What does the histogram tell us about uncertainty?",
+    answer("There is high variation in profits, suggesting high uncertainty.", correct = TRUE),
+    answer("All outcomes are nearly the same, meaning low uncertainty.", correct = FALSE)
+  )
+)
 ```
 
 ---
@@ -297,6 +333,13 @@ results <- data.frame(
 plot(results$biodiversity_impact, results$total_profits,
      col = "green", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
      ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+```
+
+Now that we see what the scatter plot looks like what is your impression? 
+
+```{r question3, echo=FALSE}
+textInput("pareto_question", "What do you expect the trade-offs to be between profit and biodiversity?", 
+          placeholder="Write your prediction before running the analysis...")
 ```
 
 Now we can look for the non-dominated points where no other solution is better in both biodiversity and total profits. A point (biodiversity, profit) is Pareto-optimal if no other point has higher biodiversity and higher profits. Change the color of the points to blue.
@@ -453,6 +496,10 @@ text(pareto_front$biodiversity_impact, pareto_front$total_profits,
      labels = labels, pos = text_positions, cex = 0.8)
 ```
 
+```{r question4, echo=FALSE}
+textInput("pareto_reflection", "What did you observe in the Pareto front?")
+```
+
 ---
 
 ## **7. Final Reflection**
@@ -461,7 +508,15 @@ text(pareto_front$biodiversity_impact, pareto_front$total_profits,
 - How would you improve your decision model?
 - How does this relate to **real-world agroecology and conservation?**
 
-```{r feedback, echo=FALSE}
+```{r feedback1, echo=FALSE}
+sliderInput("engagement", "How engaging was this tutorial?", min = 1, max = 5, value = 3)
+```
+
+```{r feedback2, echo=FALSE}
+textInput("difficulty", "What was the hardest part to understand?")
+```
+
+```{r feedback3, echo=FALSE}
 textInput("feedback", "Share your key takeaways:", placeholder="Write your reflections here...")
 ```
 
