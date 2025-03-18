@@ -21,9 +21,8 @@ source("functions/apple_sheep_pareto.R")
 
 ```
 
----
 
-# **Introduction**
+## **Introduction**
 
 Welcome to the interactive tutorial on **Decision Modeling for Agroecology & Conservation**. 
 This tutorial will guide you through:
@@ -38,7 +37,6 @@ This tutorial will guide you through:
 ```{r question0, echo=FALSE}
 textInput("intro_question", "What do you already know about decision modeling?", placeholder="Write a short response...")
 ```
-
 
 ---
 
@@ -91,7 +89,9 @@ Sketch out a decision model on a piece of paper and share with us.
 fileInput("model_upload", "Upload your decision model (optional)", accept = c("image/png", "image/jpeg"))
 ```
 
-```{r}
+Or you can adjust this one if you are familiar with DOT language. 
+
+```{r decision_model, exercise=TRUE}
 DiagrammeR::grViz("
 digraph decision_model {
   # Define node styles
@@ -115,7 +115,7 @@ digraph decision_model {
 
 ## **4. Implementing the Apple-Sheep Monte Carlo Model**
 
-Now for a very simple **Monte Carlo Simulation** in R. We will analyze a **decision**. The choice of a farmer to start agroforestry (apple trees + sheep) or maintain a treeless sheep system. Use `set.seed` and change the number of simulations to 1000.
+Now for a very simple **Monte Carlo Simulation** in R. We will analyze a **decision**. The choice of a farmer to start agroforestry (apple trees + sheep) or maintain a treeless sheep system. Use `set.seed` and change the number of simulations to 1000. 
 
 ```{r apples_model, exercise=TRUE}
 
@@ -212,9 +212,9 @@ quiz(
 
 ## **5. Pareto-Optimality)**
 
-Now we will calcualte PAreto-Optimality. We will use the concept of the Pareto front to find the best trade-offs between two competing objectives. We can learn which solutions are *optimal* (better in at least one way, without being worse in another) and which solutions are *dominated* (we could improve at least one objective without making the other worse).
+Now we will calcualte Pareto-Optimality. We will use the concept of the Pareto front to find the best trade-offs between two competing objectives. We can learn which solutions are *optimal* (better in at least one way, without being worse in another) and which solutions are *dominated* (we could improve at least one objective without making the other worse).
 
-First we need to increase the model complexity a little by adding management options. We add stocking density (sheep per hectare), tree density (trees per hectare), proportion of tree area, and proportion of sheep area (1 - proportion_tree_area). Adjust these numbers to reflect your best estimate.
+First we need to increase the model complexity a little by adding management options. We add stocking density (sheep per hectare), tree density (trees per hectare), proportion of tree area, and proportion of sheep area (1 - proportion_tree_area). *Adjust these numbers to reflect your best estimate.*
 
 ```{r management_variables, exercise=TRUE}
 
@@ -502,6 +502,27 @@ textInput("pareto_reflection", "What did you observe in the Pareto front?")
 
 ---
 
+## **6. Next Steps**
+
+```{r own_work, exercise=TRUE}
+# Define a decision problem related to agroecology. 
+# What are the key variables? 
+
+# Example: Define key income and cost variables
+your_income <- runif(100, min = ???, max = ???)  # Fill in realistic values
+your_costs <- runif(100, min = ???, max = ???) 
+
+# Compute profits
+your_profits <- your_income - your_costs
+
+# --- Next Steps ---
+# Add an uncertainty factor (e.g., climate risk)
+# Include biodiversity or sustainability impacts
+# run a Monte Carlo simulation
+```
+
+---
+
 ## **7. Final Reflection**
 
 - What insights did you gain from this tutorial?
@@ -524,11 +545,13 @@ textInput("feedback", "Share your key takeaways:", placeholder="Write your refle
 
 ## **Next Steps**
 
-- Apply Monte Carlo simulations to your own research
+- Apply Decision Analysis to your own research
 - Continue refining expert-elicited models
 
-```{r outro_message, echo=FALSE}
-cat("Thanks for participating in this tutorial! 🎉")
+Here is an open space for running your scripts. 
+
+```{r blank, exercise=TRUE}
+
 ```
 
 
