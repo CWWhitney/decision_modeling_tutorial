@@ -208,7 +208,7 @@ quiz(
 
 ---
 
-## **5. Pareto-Optimality)**
+## **5. Pareto-Optimality**
 
 Now we will calcualte Pareto-Optimality. We will use the concept of the Pareto front to find the best trade-offs between two competing objectives. We can learn which solutions are *optimal* (better in at least one way, without being worse in another) and which solutions are *dominated* (we could improve at least one objective without making the other worse).
 
@@ -272,8 +272,6 @@ biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless
 # Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
 biodiversity_value_per_species <- 500  # Assume each additional species is worth €500
 
-# Compute a combined utility function
-utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)
 ```
 
 ```{r biodiversity_variables-solution}
@@ -301,8 +299,7 @@ biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless
 # Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
 biodiversity_value_per_species <- 500  # Assume each additional species is worth €500
 
-# Compute a combined utility function
-utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)
+
 ```
 
 For the Pareto front plot we will first add the data together, store results in dataframe and plot a scatter plot. Change the color of the points in the scatter plot to green. 

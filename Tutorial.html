@@ -338,7 +338,7 @@ hist(sheep_profits, add = TRUE, col = &quot;black&quot;)</code></pre>
 <hr />
 </div>
 <div id="section-pareto-optimality" class="section level2">
-<h2><strong>5. Pareto-Optimality)</strong></h2>
+<h2><strong>5. Pareto-Optimality</strong></h2>
 <p>Now we will calcualte Pareto-Optimality. We will use the concept of
 the Pareto front to find the best trade-offs between two competing
 objectives. We can learn which solutions are <em>optimal</em> (better in
@@ -410,10 +410,7 @@ total_profits &lt;- total_profits_agroforestry - total_profits_treeless
 biodiversity_impact &lt;- biodiversity_agroforestry - biodiversity_treeless
 
 # Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
-biodiversity_value_per_species &lt;- 500  # Assume each additional species is worth €500
-
-# Compute a combined utility function
-utility &lt;- total_profits + (biodiversity_impact * biodiversity_value_per_species)</code></pre>
+biodiversity_value_per_species &lt;- 500  # Assume each additional species is worth €500</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <div class="tutorial-exercise-support"
@@ -441,10 +438,7 @@ total_profits &lt;- total_profits_agroforestry - total_profits_treeless
 biodiversity_impact &lt;- biodiversity_agroforestry - biodiversity_treeless
 
 # Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
-biodiversity_value_per_species &lt;- 500  # Assume each additional species is worth €500
-
-# Compute a combined utility function
-utility &lt;- total_profits + (biodiversity_impact * biodiversity_value_per_species)</code></pre>
+biodiversity_value_per_species &lt;- 500  # Assume each additional species is worth €500</code></pre>
 </div>
 <p>For the Pareto front plot we will first add the data together, store
 results in dataframe and plot a scatter plot. Change the color of the
@@ -775,22 +769,22 @@ session$onSessionEnded(function() {
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "question1-1", 
     question = structure("What is a good reason to use a probabilistic approach to support decision-making in agroecology?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_d62b7b0", 
+    "character")), answers = list(structure(list(id = "lnr_ans_1d85d76", 
         option = "It captures uncertainty in outcomes and trade-offs.", 
         value = "It captures uncertainty in outcomes and trade-offs.", 
         label = structure("It captures uncertainty in outcomes and trade-offs.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_527f14b", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9aabaf3", 
         option = "It provides fixed deterministic solutions.", 
         value = "It provides fixed deterministic solutions.", 
         label = structure("It provides fixed deterministic solutions.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_159733d", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2991ed2", 
         option = "It replaces the need for expert knowledge.", 
         value = "It replaces the need for expert knowledge.", 
         label = structure("It replaces the need for expert knowledge.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ab16515", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_21967ef", 
         option = "It avoids the need for validation.", value = "It avoids the need for validation.", 
         label = structure("It avoids the need for validation.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -802,7 +796,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "question1-1-answer", question = "question1-1"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = FALSE, 
-    seed = 1291400727.39864, options = list()), class = c("learnr_radio", 
+    seed = 115403678.946261, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1007,12 +1001,12 @@ learnr:::store_exercise_cache(structure(list(label = "plot_profits_overlay", glo
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "question2-1", 
     question = structure("What does the histogram tell us about uncertainty?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_d6185fc", 
+    "character")), answers = list(structure(list(id = "lnr_ans_1bace50", 
         option = "There is high variation in profits, suggesting high uncertainty.", 
         value = "There is high variation in profits, suggesting high uncertainty.", 
         label = structure("There is high variation in profits, suggesting high uncertainty.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_640f7d3", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4708f26", 
         option = "All outcomes are nearly the same, meaning low uncertainty.", 
         value = "All outcomes are nearly the same, meaning low uncertainty.", 
         label = structure("All outcomes are nearly the same, meaning low uncertainty.", html = TRUE, class = c("html", 
@@ -1025,7 +1019,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "question2-1-answer", question = "question2-1"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = FALSE, 
-    seed = 1340229408.87591, options = list()), class = c("learnr_radio", 
+    seed = 623353039.709729, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1101,7 +1095,7 @@ learnr:::store_exercise_cache(structure(list(label = "biodiversity_variables", g
 "library(shiny)", "library(DiagrammeR)", "", "source(\"functions/monte_carlo.R\")", 
 "source(\"functions/apples_sheep_in_class.R\")", "source(\"functions/apple_sheep_pareto.R\")", 
 ""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "biodiversity_variables", code = "\n# Define species richness and grazing impact factors per hectare\nspecies_richness_per_tree <- 0.05  # Each tree adds 0.05 species per ha\nspecies_loss_per_sheep <- 0.02  # Each sheep reduces 0.02 species per ha\n\n# Calculate biodiversity per ha\ntree_species_richness <- tree_density * species_richness_per_tree\ngrazing_species_loss <- stocking_density * species_loss_per_sheep\n\n# Compute biodiversity outcomes per ha\nbiodiversity_agroforestry <- tree_species_richness - grazing_species_loss\nbiodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect\n\n# Calculate difference (decision impact of trees)\n# measures the financial difference when switching to trees\ntotal_profits <- total_profits_agroforestry - total_profits_treeless\n\n# Calculate difference (decision impact of trees on biodiversity)\n# measures the net gain/loss in biodiversity from switching to trees\nbiodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless\n\n# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)\nbiodiversity_value_per_species <- 500  # Assume each additional species is worth €500\n\n# Compute a combined utility function\nutility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)", 
+    chunks = list(list(label = "biodiversity_variables", code = "\n# Define species richness and grazing impact factors per hectare\nspecies_richness_per_tree <- 0.05  # Each tree adds 0.05 species per ha\nspecies_loss_per_sheep <- 0.02  # Each sheep reduces 0.02 species per ha\n\n# Calculate biodiversity per ha\ntree_species_richness <- tree_density * species_richness_per_tree\ngrazing_species_loss <- stocking_density * species_loss_per_sheep\n\n# Compute biodiversity outcomes per ha\nbiodiversity_agroforestry <- tree_species_richness - grazing_species_loss\nbiodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect\n\n# Calculate difference (decision impact of trees)\n# measures the financial difference when switching to trees\ntotal_profits <- total_profits_agroforestry - total_profits_treeless\n\n# Calculate difference (decision impact of trees on biodiversity)\n# measures the net gain/loss in biodiversity from switching to trees\nbiodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless\n\n# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)\nbiodiversity_value_per_species <- 500  # Assume each additional species is worth €500\n", 
         opts = list(label = "\"biodiversity_variables\"", exercise = "TRUE"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = NULL, solution = structure(c("", "# Define species richness and grazing impact factors per hectare", 
@@ -1119,8 +1113,7 @@ learnr:::store_exercise_cache(structure(list(label = "biodiversity_variables", g
     "biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless", 
     "", "# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)", 
     "biodiversity_value_per_species <- 500  # Assume each additional species is worth €500", 
-    "", "# Compute a combined utility function", "utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)"
-    ), chunk_opts = list(label = "biodiversity_variables-solution")), 
+    "", ""), chunk_opts = list(label = "biodiversity_variables-solution")), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -1153,8 +1146,7 @@ learnr:::store_exercise_cache(structure(list(label = "biodiversity_variables", g
         "biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless", 
         "", "# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)", 
         "biodiversity_value_per_species <- 500  # Assume each additional species is worth €500", 
-        "", "# Compute a combined utility function", "utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)"
-        ), out.width.px = 624, out.height.px = 384, params.src = "biodiversity_variables, exercise=TRUE", 
+        ""), out.width.px = 624, out.height.px = 384, params.src = "biodiversity_variables, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged", exercise.checker = "NULL"), 
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
