@@ -1,5 +1,5 @@
 ---
-title: "Decision Modeling for Agroecology & Conservation"
+title: "Decision Modeling for Agroecology"
 author: "Cory Whitney"
 date: "`r Sys.Date()`"
 output: learnr::tutorial
