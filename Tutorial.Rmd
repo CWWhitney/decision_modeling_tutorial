@@ -111,7 +111,7 @@ digraph decision_model {
 
 ---
 
-## **4. Implementing the Apple-Sheep Monte Carlo Model**
+## **4. Implementing a Monte Carlo Model**
 
 Now for a very simple **Monte Carlo Simulation** in R. We will analyze a **decision**. The choice of a farmer to start agroforestry (apple trees + sheep) or maintain a treeless sheep system. Use `set.seed` and change the number of simulations to 1000. 
 
