@@ -45,7 +45,7 @@ biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless
 biodiversity_value_per_species <- 500  # Assume each additional species is worth €500
 
 # Compute a combined utility function
-utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)
+# utility <- total_profits + (biodiversity_impact * biodiversity_value_per_species)
 
 
 # --- PARETO FRONT ANALYSIS ---
