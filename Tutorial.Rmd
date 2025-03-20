@@ -32,7 +32,7 @@ This tutorial will guide you through:
 - **Structuring causal models** using Directed Acyclic Graphs (DAGs)
 - **Monte Carlo simulation** for decision-making
 - **Expert-elicited probabilities** and model validation
-- **Evaluating models** with EVPI and Pareto-optimality
+- **Evaluating models** with Pareto-optimality
 
 ```{r question0, echo=FALSE}
 textInput("intro_question", "What do you already know about decision modeling?", placeholder="Write a short response...")
