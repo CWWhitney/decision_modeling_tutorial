@@ -93,20 +93,32 @@ Or you can adjust this one if you are familiar with DOT language.
 DiagrammeR::grViz("
 digraph decision_model {
   # Define node styles
-  node [shape=box, style=filled, fillcolor=lightblue] Decision;
-  node [shape=ellipse, style=filled, fillcolor=lightgrey] Apple_Income Sheep_Income Costs;
-  node [shape=ellipse, style=filled, fillcolor=green] Outcome_Profit;
+  node [shape=ellipse, style=filled, fillcolor=lightyellow] Apple_Income Sheep_Income Total_incomes ;
+  node [shape=ellipse, style=filled, fillcolor=lightpink] Sheep_cost Apple_cost Total_costs;
+  node [shape=ellipse, style=filled, fillcolor=lightblue] Outcome_Profit;
+  
+  # Add layout
+  graph [rankdir=LR]
+  
+  # Add labels
+  Apple_Income [label = 'Apple Income (€)']
+  Sheep_Income [label = 'Sheep Income (€)']
+  Total_incomes [label = 'Total Income']
+  Apple_cost [label = 'Apple Cost (€)']
+  Sheep_cost [label = 'Sheep Cost (€)']
+  Total_costs [label = 'Total Cost']
+  Outcome_Profit [label = 'Net Profit (€)']
 
   # Define relationships
-  Decision -> Apple_Income;
-  Decision -> Sheep_Income;
-  Decision -> Costs;
-  Costs -> Apple_Income;
-  Costs -> Sheep_Income;
-  Apple_Income -> Outcome_Profit;
-  Sheep_Income -> Outcome_Profit;
+  Sheep_cost -> Total_costs;
+  Apple_cost -> Total_costs;
+  Apple_Income -> Total_incomes;
+  Sheep_Income -> Total_incomes;
+  Total_costs -> Outcome_Profit;
+  Total_incomes -> Outcome_Profit
 }
 ")
+
 ```
 
 ---
