@@ -14,257 +14,243 @@ library(ggplot2)
 library(learnr)
 library(shiny)
 library(DiagrammeR)
+source("AF_Maize_Script.R")
+```
 
-source("functions/monte_carlo.R")
-source("functions/apples_sheep_in_class.R")
-source("functions/apple_sheep_pareto.R")
+## NLKH: xen canh xoai (mango) và ngo (maize)
 
+```{r set_seed, exercise=TRUE}
+n <- 10
+set.seed(123) 
+```
+
+```{r set_seed-solution}
+n <- 10
+set.seed(123) 
+```
+
+```{r AF_mango_yield, exercise=TRUE}
+#NLKH: xen canh xoai (mango) và ngo (maize)
+AF_mango_yield <- runif(n, 6000, 10000) # giá trị nhỏ nhất và lớn nhất (kg/ha)
+```
+
+```{r AF_mango_yield-solution}
+#NLKH: xen canh xoai (mango) và ngo (maize)
+AF_mango_yield <- runif(n, 6000, 10000) # giá trị nhỏ nhất và lớn nhất (kg/ha)
+AF_mango_yield
+```
+
+```{r AF_maize_yield, exercise=TRUE}
+AF_maize_yield <- runif( n, 3000, 5000) # (kg/ha)
+AF_maize_yield
+```
+
+```{r AF_maize_yield-solution}
+AF_maize_yield <- runif( n, 3000, 5000) # (kg/ha)
+AF_maize_yield
+```
+
+```{r AF_cost, exercise=TRUE}
+AF_cost <- runif(n, 15, 30) # (trieu VND/ha)
+```
+
+```{r AF_cost-solution}
+AF_cost <- runif(n, 15, 30) # (trieu VND/ha)
+```
+
+#Ngo doc canh
+
+```{r mono_maize_yield, exercise=TRUE}
+mono_maize_yield <- runif (n, 4000, 8000) # (ton/ha)
+```
+
+```{r maize_cost, exercise=TRUE}
+maize_cost <- runif(n, 7, 15) # 10 trieu VND/ha
+```
+
+```{r maize_price, exercise=TRUE}
+maize_price <- runif(n, 0.003, 0.007) # trieu VND/kg
+```
+
+```{r mango_price, exercise=TRUE}
+mango_price <- runif(n, 0.002, 0.007) # trieu VND/kg
+```
+
+```{r mango_price-solution}
+mango_price <- runif(n, 0.002, 0.007) # trieu VND/kg
+```
+
+# 2) Rủi ro hạn hán
+
+```{r p_drought, exercise=TRUE}
+
+p_drought <- runif(n, 0.10, 0.50)     # mô phỏng xác suất hạn hán 
+```
+
+```{r p_drought-solution}
+
+p_drought <- runif(n, 0.10, 0.50)     # mô phỏng xác suất hạn hán 
+```
+
+```{r drought, exercise=TRUE}
+
+drought <- rbinom(n, size = 1, prob = p_drought)  # 1 = năm hạn hán
+```
+
+```{r drought-solution}
+
+drought <- rbinom(n, size = 1, prob = p_drought)  # 1 = năm hạn hán
 ```
 
 
-## **Introduction**
+```{r loss_maize, exercise=TRUE}
 
-Welcome to the interactive tutorial on **Decision Modeling for Agroecology & Conservation**. 
-This tutorial will guide you through:
-
-- **Theoretical foundations** of decision modeling 
-- **Identifying decision options and outcomes** 
-- **Structuring causal models** using Directed Acyclic Graphs (DAGs)
-- **Monte Carlo simulation** for decision-making
-- **Expert-elicited probabilities** and model validation
-- **Evaluating models** with Pareto-optimality
-
-```{r question0, echo=FALSE}
-textInput("intro_question", "What do you already know about decision modeling?", placeholder="Write a short response...")
+loss_maize <- ifelse(drought == 1, runif(n, 0.30, 0.70), 0)
 ```
 
----
 
-## **1. Decision Modeling**
+```{r loss_maize-solution}
 
-Decision-making in agroecology often requires navigating trade-offs, for example between productivity and biodiversity. Decisions are further complicated by system complexity and uncertainty, i.e. the impacts of climate variability or market fluctuations. In this section, we will explore why decision modeling matters for agroecology, how it can guide sustainable land management, and what tools can help us make informed decisions.
+loss_maize <- ifelse(drought == 1, runif(n, 0.30, 0.70), 0)
+```
 
-```{r question1, echo=FALSE}
-quiz(
-  question("What is a good reason to use a probabilistic approach to support decision-making in agroecology?",
-    answer("It captures uncertainty in outcomes and trade-offs.", correct = TRUE),
-    answer("It provides fixed deterministic solutions.", correct = FALSE),
-    answer("It replaces the need for expert knowledge.", correct = FALSE),
-    answer("It avoids the need for validation.", correct = FALSE)
-  )
+
+```{r loss_mango, exercise=TRUE}
+
+loss_mango <- ifelse(drought == 1, runif(n, 0.10, 0.50), 0)
+```
+
+```{r loss_mango-solution}
+
+loss_mango <- ifelse(drought == 1, runif(n, 0.10, 0.50), 0)
+```
+
+
+```{r AF_mango_yield_drought, exercise=TRUE}
+
+AF_mango_yield_drought <- AF_mango_yield * (1 - loss_mango)
+```
+
+
+```{r AF_mango_yield_drought-solution}
+
+AF_mango_yield_drought <- AF_mango_yield * (1 - loss_mango)
+```
+
+
+```{r AF_maize_yield_drought, exercise=TRUE}
+
+AF_maize_yield_drought <- AF_maize_yield * (1 - loss_maize)
+```
+
+```{r AF_maize_yield_drought-solution}
+
+AF_maize_yield_drought <- AF_maize_yield * (1 - loss_maize)
+```
+
+```{r mono_maize_yield_drought, exercise=TRUE}
+
+mono_maize_yield_drought <- mono_maize_yield * (1 - loss_maize)
+mono_maize_yield_drought
+```
+
+```{r mono_maize_yield_drought-solution}
+
+mono_maize_yield_drought <- mono_maize_yield * (1 - loss_maize)
+mono_maize_yield_drought
+```
+
+# --- Lợi nhuận ---
+
+```{r figure1, exercise=TRUE}
+AF_profit_drought <- (AF_mango_yield_drought * mango_price + AF_maize_yield_drought * maize_price) - AF_cost
+mean(AF_profit_drought > 0)
+hist(
+  AF_profit_drought,
+  breaks = 40,
+  col = "lightblue",
+  border = "white",
+  main = "Nông lâm kết hợp",
+  ylab = "Tần suất",
+  xlab = "Lợi nhuận (triệu VND/ha)"
 )
 ```
 
----
-
-## **2. Identifying Decision Options and Outcomes**
-
-**Activity:** Identify and list **decision options** and **outcomes of interest** from the perspective of decision-makers.
-
-```{r decision_options, echo=FALSE}
-textInput("decision_options", "List the decision options relevant to an agroecological problem:", placeholder="Example: Adopting agroforestry, expanding irrigation, switching to organic inputs...")
-```
-
-```{r decision_outcomes, echo=FALSE}
-textInput("decision_outcomes", "List the key outcomes of interest for decision-makers:", placeholder="Example: Yield improvement, biodiversity conservation, financial returns...")
-```
-
----
-
-## **3. Structuring a Causal Decision Model (DAGs)**
-
-**Activity:** Sketch a decision model using the interactive diagram tool or upload a hand-drawn image.
-
-### **Option 1: Interactive DAG Drawing**
-
-Share a link of a graph you build in [Loopy](https://ncase.me/loopy/) by [Explorable Explanations](http://explorableexplanations.com/)
-
-### **Option 2: Upload a Hand-Drawn Model**
-
-Sketch out a decision model on a piece of paper and share with us.
-
-```{r upload_model, echo=FALSE}
-fileInput("model_upload", "Upload your decision model (optional)", accept = c("image/png", "image/jpeg"))
-```
-
-Or you can adjust this one if you are familiar with DOT language. 
-
-```{r decision_model, exercise=TRUE}
-DiagrammeR::grViz("
-digraph decision_model {
-  # Define node styles
-  node [shape=ellipse, style=filled, fillcolor=lightyellow] Apple_Income Sheep_Income Total_incomes ;
-  node [shape=ellipse, style=filled, fillcolor=lightpink] Sheep_cost Apple_cost Total_costs;
-  node [shape=ellipse, style=filled, fillcolor=lightblue] Outcome_Profit;
-  
-  # Add layout
-  graph [rankdir=LR]
-  
-  # Add labels
-  Apple_Income [label = 'Apple Income (€)']
-  Sheep_Income [label = 'Sheep Income (€)']
-  Total_incomes [label = 'Total Income']
-  Apple_cost [label = 'Apple Cost (€)']
-  Sheep_cost [label = 'Sheep Cost (€)']
-  Total_costs [label = 'Total Cost']
-  Outcome_Profit [label = 'Net Profit (€)']
-
-  # Define relationships
-  Sheep_cost -> Total_costs;
-  Apple_cost -> Total_costs;
-  Apple_Income -> Total_incomes;
-  Sheep_Income -> Total_incomes;
-  Total_costs -> Outcome_Profit;
-  Total_incomes -> Outcome_Profit
-}
-")
-
-```
-
----
-
-## **4. Implementing a Monte Carlo Model**
-
-Now for a very simple **Monte Carlo Simulation** in R. We will analyze a **decision**. The choice of a farmer to start agroforestry (apple trees + sheep) or maintain a treeless sheep system. Use `set.seed` and change the number of simulations to 1000. 
-
-```{r apples_model, exercise=TRUE}
-
-# set.seed(42)
-num_simulations <- 100
-
-# Define ranges per ha per year Euro
-# lower and upper
-apple_income <- runif(n = num_simulations, 
-                      min = 3000, 
-                      max = 60000)
-
-apple_costs <- runif(n = num_simulations, 
-                      min = 15000, 
-                     max = 30000)
-
-apple_profits <- apple_income - apple_costs
-```
-
-```{r apples_model-solution}
-
-set.seed(42)
-num_simulations <- 1000
-
-# Define ranges per ha per year Euro
-# lower and upper
-apple_income <- runif(n = num_simulations, 
-                      min = 3000, 
-                      max = 60000)
-
-apple_costs <- runif(n = num_simulations, 
-                      min = 15000, 
-                     max = 30000)
-
-apple_profits <- apple_income - apple_costs
-```
-
-Add sheep to the horticulture system. So we can judge the relative benefits of transition to a silvopastoral agroforestry system. Add the sheep and apple profits as a last step in the function.
-
-```{r sheep_model, exercise=TRUE}
-
-# Euro per ha per year
-sheep_income <- runif(n = num_simulations, 
-                      min = 2000, 
-                      max = 5000)
-
-sheep_costs <- runif(n = num_simulations, 
-                     min = 1000, 
-                     max = 2500)
-
-sheep_profits <- sheep_income - sheep_costs
-```
-
-```{r sheep_model-solution}
-
-# Euro per ha per year
-sheep_income <- runif(n = num_simulations, 
-                      min = 2000, 
-                      max = 5000)
-
-sheep_costs <- runif(n = num_simulations, 
-                     min = 1000, 
-                     max = 2500)
-
-sheep_profits <- sheep_income - sheep_costs
-
-total_profits <- apple_profits + sheep_profits
-```
-
-Plot a histogram of the profits. Change the color of the apple_profits to grey. 
-
-```{r plot_profits_overlay, exercise=TRUE}
-hist(total_profits, col = "white")
-hist(apple_profits, add = TRUE, col = "pink")
-hist(sheep_profits, add = TRUE, col = "black")
-```
-
-```{r plot_profits_overlay-solution}
-hist(total_profits, col = "white")
-hist(apple_profits, add = TRUE, col = "grey")
-hist(sheep_profits, add = TRUE, col = "black")
-```
-
-```{r question2, echo=FALSE}
-quiz(
-  question("What does the histogram tell us about uncertainty?",
-    answer("There is high variation in profits, suggesting high uncertainty.", correct = TRUE),
-    answer("All outcomes are nearly the same, meaning low uncertainty.", correct = FALSE)
-  )
+```{r figure1-solution, exercise=TRUE}
+AF_profit_drought <- (AF_mango_yield_drought * mango_price + AF_maize_yield_drought * maize_price) - AF_cost
+mean(AF_profit_drought > 0)
+hist(
+  AF_profit_drought,
+  breaks = 40,
+  col = "lightblue",
+  border = "white",
+  main = "Nông lâm kết hợp",
+  ylab = "Tần suất",
+  xlab = "Lợi nhuận (triệu VND/ha)"
 )
 ```
 
----
+# --- Lợi nhuận ---
 
-## **6. Next Steps**
-
-```{r own_work, exercise=TRUE}
-# Define a decision problem related to agroecology. 
-# What are the key variables? 
-
-# Example: Define key income and cost variables
-your_income <- runif(100, min = ???, max = ???)  # Fill in realistic values
-your_costs <- runif(100, min = ???, max = ???) 
-
-# Compute profits
-your_profits <- your_income - your_costs
-
-# --- Next Steps ---
-# Add an uncertainty factor (e.g., climate risk)
-# Include biodiversity or sustainability impacts
-# run a Monte Carlo simulation
+```{r figure2, exercise=TRUE}
+AF_profit_drought <- (AF_mango_yield_drought * mango_price + AF_maize_yield_drought * maize_price) - AF_cost
+mean(AF_profit_drought > 0)
+hist(
+  AF_profit_drought,
+  breaks = 40,
+  col = "lightblue",
+  border = "white",
+  main = "Nông lâm kết hợp",
+  ylab = "Tần suất",
+  xlab = "Lợi nhuận (triệu VND/ha)"
+)
 ```
 
----
-
-## **7. Final Reflection**
-
-- What insights did you gain from this tutorial?
-- How would you improve your decision model?
-- How does this relate to **real-world agroecology and conservation?**
-
-```{r feedback1, echo=FALSE}
-sliderInput("engagement", "How engaging was this tutorial?", min = 1, max = 5, value = 3)
+```{r figure2-solution}
+AF_profit_drought <- (AF_mango_yield_drought * mango_price + AF_maize_yield_drought * maize_price) - AF_cost
+mean(AF_profit_drought > 0)
+hist(
+  AF_profit_drought,
+  breaks = 40,
+  col = "lightblue",
+  border = "white",
+  main = "Nông lâm kết hợp",
+  ylab = "Tần suất",
+  xlab = "Lợi nhuận (triệu VND/ha)"
+)
 ```
 
-```{r feedback2, echo=FALSE}
-textInput("difficulty", "What was the hardest part to understand?")
+# Kết quả kỳ vọng của quyết định
+
+```{r figure3, exercise=TRUE}
+mono_profit_drought <- (mono_maize_yield_drought * maize_price) - maize_cost
+mean(mono_profit_drought > 0)
+hist(
+  mono_profit_drought,
+  breaks = 40,
+  col = "rosybrown1",
+  border = "white",
+  main = "Ngô độc canh",
+  ylab = "Tần suất",
+  xlab = "Lợi nhuận (triệu VND/ha)"
+)
 ```
 
-```{r feedback3, echo=FALSE}
-textInput("feedback", "Share your key takeaways:", placeholder="Write your reflections here...")
+```{r figure3-solution}
+# Kết quả kỳ vọng của quyết định
+decision_profit <- AF_profit_drought - mono_profit_drought
+mean(decision_profit > 0)
+hist(
+  decision_profit,
+  breaks = 40,
+  col = "cyan4",
+  border = "white",
+  main = NULL,
+  ylab = "Tần suất",
+  xlab = "Giá trị kỳ vọng (triệu VND/ha)"
+)
+
 ```
-
----
-
-## **Next Steps**
-
-- Apply Decision Analysis to your own research
-- Continue refining expert-elicited models
 
 Thanks for following this tutorial. As thanks, here is an open space for running your scripts. 
 
@@ -276,12 +262,9 @@ Thanks for following this tutorial. As thanks, here is an open space for running
 
 ## References
 
+Hoa 
+
 Whitney, C, K Shepherd, and E Luedeling. “Decision Analysis Methods Guide; Agricultural Policy for Nutrition.” World Agroforestry (ICRAF) Working Paper series, no. 275 (2018): 40. http://dx.doi.org/10.5716/WP18001.PDF.
 
 Whitney, Cory, Denis Lanzanova, Caroline Muchiri, Keith D. Shepherd, Todd S. Rosenstock, Michael Krawinkel, John R. S. Tabuti, and Eike Luedeling. “Probabilistic Decision Tools for Determining Impacts of Agricultural Development Policy on Household Nutrition.” Earth’s Future 6, no. 3 (2018): 359–72. https://doi.org/10.1002/2017EF000765.
-
-Whitney, Cory, Gordon O’Brien, Vuyisile Dlamini, Ikhothatseng Jacob Greffiths, Chris Dickens, and Eike Luedeling. “Balancing Ecosystem Sustainability and Irrigated Smallholder Agriculture: A Modeling Approach for Water Resource Management.” Journal of Hydrology 651 (April 2025): 132560. https://doi.org/10.1016/j.jhydrol.2024.132560.
-
-Whitney, Cory, Lisa Biber-Freudenberger, and Eike Luedeling. “Decision Analytical Methods for Assessing the Efficacy of Agroecology Interventions.” CABI Agriculture and Bioscience 4, no. 1 (2023): 9. https://doi.org/10.1186/s43170-023-00151-9.
-
 
