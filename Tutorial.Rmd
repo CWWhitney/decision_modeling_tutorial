@@ -20,7 +20,7 @@ source("AF_Maize_Script.R")
 ## NLKH: xen canh xoai (mango) và ngo (maize)
 
 ```{r set_seed, exercise=TRUE}
-n <- 10
+n <- 100
 set.seed(123) 
 ```
 
@@ -112,28 +112,9 @@ mono_maize_yield_drought
 ```
 
 
-
 # --- Lợi nhuận ---
 
-```{r figure1, exercise=TRUE}
-AF_profit_drought <- (AF_mango_yield_drought * mango_price + AF_maize_yield_drought * maize_price) - AF_cost
-mean(AF_profit_drought > 0)
-hist(
-  AF_profit_drought,
-  breaks = 40,
-  col = "lightblue",
-  border = "white",
-  main = "Nông lâm kết hợp",
-  ylab = "Tần suất",
-  xlab = "Lợi nhuận (triệu VND/ha)"
-)
-```
-
-
-
-# --- Lợi nhuận ---
-
-```{r figure2, exercise=TRUE}
+```{r AF_profit_drought, exercise=TRUE}
 AF_profit_drought <- (AF_mango_yield_drought * mango_price + AF_maize_yield_drought * maize_price) - AF_cost
 mean(AF_profit_drought > 0)
 hist(
@@ -176,7 +157,13 @@ Thanks for following this tutorial. As thanks, here is an open space for running
 
 ## References
 
-Hoa 
+Do H, Luedeling E, Whitney C. Decision analysis of agroforestry options reveals adoption risks for resource-poor farmers. Agron Sustain Dev. 2020;40(3):20. doi:10.1007/s13593-020-00624-5
+
+Fernandez E, Do H, Luedeling E, Luu TTG, Whitney C. Prioritizing farm management interventions to improve climate change adaptation and mitigation outcomes—a case study for banana plantations. Agron Sustain Dev. 2022;42(4):76. doi:10.1007/s13593-022-00809-0
+
+Do H, Whitney C, La N, Storm H, Luedeling E. Adapting agroforestry to upland farming systems: narratives from smallholder farmers in Northwest Vietnam. Agron Sustain Dev. 2024;44(2):17. doi:10.1007/s13593-024-00954-8
+
+Do H, Whitney C, Storm H, Nguyen H, La N, Luedeling E. Markets and incentives strongly drive agroforestry adoption: insights from ethnic minority smallholders in Son La, Vietnam. Agroforestry Systems. Published online 2025:99:129. doi:10.1007/s10457-025-01199-4
 
 Whitney, C, K Shepherd, and E Luedeling. “Decision Analysis Methods Guide; Agricultural Policy for Nutrition.” World Agroforestry (ICRAF) Working Paper series, no. 275 (2018): 40. http://dx.doi.org/10.5716/WP18001.PDF.
 
