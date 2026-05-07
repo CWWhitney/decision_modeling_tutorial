@@ -1,0 +1,51 @@
+## **3. Structuring a Causal Decision Model (DAGs)**
+
+**Activity:** Sketch a decision model using the interactive diagram tool or upload a hand-drawn image.
+
+### **Option 1: Interactive DAG Drawing**
+
+Share a link of a graph you build in [Loopy](https://ncase.me/loopy/) by [Explorable Explanations](http://explorableexplanations.com/)
+
+### **Option 2: Upload a Hand-Drawn Model**
+
+Sketch out a decision model on a piece of paper and share with us.
+
+```{r upload_model, echo=FALSE}
+fileInput("model_upload", "Upload your decision model (optional)", accept = c("image/png", "image/jpeg"))
+```
+
+Or you can adjust this one if you are familiar with DOT language. 
+
+```{r decision_model, exercise=TRUE}
+DiagrammeR::grViz("
+digraph decision_model {
+  # Define node styles
+  node [shape=ellipse, style=filled, fillcolor=lightyellow] Apple_Income Sheep_Income Total_incomes ;
+  node [shape=ellipse, style=filled, fillcolor=lightpink] Sheep_cost Apple_cost Total_costs;
+  node [shape=ellipse, style=filled, fillcolor=lightblue] Outcome_Profit;
+  
+  # Add layout
+  graph [rankdir=LR]
+  
+  # Add labels
+  Apple_Income [label = 'Apple Income (€)']
+  Sheep_Income [label = 'Sheep Income (€)']
+  Total_incomes [label = 'Total Income']
+  Apple_cost [label = 'Apple Cost (€)']
+  Sheep_cost [label = 'Sheep Cost (€)']
+  Total_costs [label = 'Total Cost']
+  Outcome_Profit [label = 'Net Profit (€)']
+
+  # Define relationships
+  Sheep_cost -> Total_costs;
+  Apple_cost -> Total_costs;
+  Apple_Income -> Total_incomes;
+  Sheep_Income -> Total_incomes;
+  Total_costs -> Outcome_Profit;
+  Total_incomes -> Outcome_Profit
+}
+")
+
+```
+
+---

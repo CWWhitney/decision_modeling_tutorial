@@ -1,0 +1,30 @@
+## **9. Final Reflection**
+
+- What insights did you gain from this tutorial?
+- How would you improve your decision model?
+- How does this relate to **real-world agroecology and conservation?**
+
+```{r feedback1, echo=FALSE}
+sliderInput("engagement", "How engaging was this tutorial?", min = 1, max = 5, value = 3)
+```
+
+```{r feedback2, echo=FALSE}
+textInput("difficulty", "What was the hardest part to understand?")
+```
+
+```{r feedback3, echo=FALSE}
+textInput("feedback", "Share your key takeaways:", placeholder="Write your reflections here...")
+```
+
+---
+
+## **Next Steps**
+
+- Apply Decision Analysis to your own research
+- Continue refining expert-elicited models
+
+Thanks for following this tutorial. As thanks, here is an open space for running your scripts. 
+
+```{r blank, exercise=TRUE}
+
+```

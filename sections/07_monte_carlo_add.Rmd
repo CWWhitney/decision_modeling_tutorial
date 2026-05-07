@@ -1,0 +1,128 @@
+## **7. Extending the Model with Time: `monte_carlo_add.R`**
+
+The model in Section 6 treats all inputs as single annual values — useful for a first pass, but it cannot capture how outcomes unfold over time. What if apple trees take 4–6 years to mature before producing any income? What if there are large upfront costs in year one that dwarf later annual costs? A single-year average glosses over all of that.
+
+Here we extend the model to handle exactly that. Income and costs are tracked *year by year* across a full time horizon, and `discount()` processes a **vector** of yearly values to return a true multi-year NPV.
+
+### **Key differences from `monte_carlo.R`**
+
+| Feature | `monte_carlo.R` | `monte_carlo_add.R` |
+|---|---|---|
+| Number of variables | 5 | 8 |
+| Time horizon | None (single-year) | `n_years` (e.g. 20 years) |
+| Apple income delay | None | Zero until `time_to_harvest` |
+| Establishment cost | None | `cost_orchard_establishment` in year 1 |
+| `make_variables()` helper | No | Yes — for testing a single draw |
+| Input to `discount()` | Scalar | Year-vector (length `n_years`) |
+
+### **Workflow**
+
+1. Add the `make_variables()` helper to sample one draw and inspect variable values.
+2. Extend the `input_estimates` table with the three new variables.
+3. Modify the model function to build year-vectors and apply the time-based rules.
+4. Test the model function with a single draw before running the full simulation.
+5. Run `mcSimulation()` as before.
+
+### **Step 1: The `make_variables()` helper**
+
+`make_variables()` draws one sample from the estimate distributions and assigns each variable into the global environment. This lets you call `model_function()` interactively and inspect intermediate values — useful for debugging before running thousands of simulations.
+
+```{r mc_add_make_vars, exercise=TRUE}
+make_variables <- function(est, n = 1) {
+  x <- random(rho = est, n = n)
+  for (i in colnames(x)) assign(i, as.numeric(x[1, i]), envir = .GlobalEnv)
+}
+```
+
+### **Step 2: Extend the input estimates**
+
+Three variables are added: `n_years` and `discount_rate` are fixed constants; `cost_orchard_establishment` and `time_to_harvest` are uncertain. Notice `time_to_harvest` uses a `unif` (uniform) distribution because the uncertainty is bounded without a clear central tendency.
+
+```{r mc_add_estimates, exercise=TRUE}
+input_estimates_add <- data.frame(
+  variable = c("sheep_income", "sheep_cost", "apple_income", "apple_cost",
+               "discount_rate", "n_years", "cost_orchard_establishment", "time_to_harvest"),
+  lower    = c(3000, 1000, 30000, 15000, 10, 20, 50000, 4),
+  median   = NA,
+  upper    = c(5000, 2500, 60000, 30000, 10, 20, 70000, 6),
+  distribution = c("posnorm", "posnorm", "posnorm", "posnorm",
+                   "const", "const", "posnorm", "unif"),
+  label = c("Income from sheep (euro/year)", "Cost of sheep (euro/year)",
+            "Income from apple (euro/year)", "Cost of apple (euro/year)",
+            "Discount Rate", "Simulated Years",
+            "Construction cost of orchard", "Time until fruit harvest")
+)
+```
+
+### **Step 3: Write the time-aware model function**
+
+The model now builds a vector of length `n_years` for each income and cost stream. Apple income is set to zero for the first `time_to_harvest` years (the establishment phase), and the full orchard construction cost replaces the normal apple cost in year 1.
+
+```{r mc_add_model, exercise=TRUE}
+model_function_add <- function() {
+  # time_to_harvest must be an integer for indexing
+  time_to_harvest <- round(time_to_harvest, digits = 0)
+
+  # Expand scalar inputs into year-vectors
+  apple_income <- rep(apple_income, n_years)
+  apple_cost   <- rep(apple_cost,   n_years)
+  sheep_cost   <- rep(sheep_cost,   n_years)
+  sheep_income <- rep(sheep_income, n_years)
+
+  # No apple income during the establishment phase
+  apple_income[1:time_to_harvest] <- 0
+
+  # Upfront orchard establishment cost replaces year-1 apple cost
+  apple_cost[1] <- cost_orchard_establishment
+
+  AF_income        <- sheep_income + apple_income
+  AF_cost          <- sheep_cost   + apple_cost
+  AF_final_result  <- AF_income  - AF_cost
+  sheep_only       <- sheep_income - sheep_cost
+  Decision_benefit <- AF_final_result - sheep_only
+
+  AF_NPV         <- discount(AF_final_result,  discount_rate = discount_rate, calculate_NPV = TRUE)
+  NPV_sheep_only <- discount(sheep_only,        discount_rate = discount_rate, calculate_NPV = TRUE)
+  NPV_decision   <- discount(Decision_benefit,  discount_rate = discount_rate, calculate_NPV = TRUE)
+
+  return(list(
+    NPV_Agroforestry_System = AF_NPV,
+    NPV_Treeless_System     = NPV_sheep_only,
+    NPV_decision            = NPV_decision
+  ))
+}
+```
+
+### **Step 4: Test with a single draw**
+
+Use `make_variables()` to populate the global environment and call the model function once before running the full simulation. This is a good debugging practice.
+
+```{r mc_add_test, exercise=TRUE}
+make_variables(as.estimate(input_estimates_add))
+model_function_add()
+```
+
+### **Step 5: Run the extended simulation**
+
+```{r mc_add_sim, exercise=TRUE}
+apple_sheep_mc_add <- mcSimulation(
+  estimate          = as.estimate(input_estimates_add),
+  model_function    = model_function_add,
+  numberOfModelRuns = 100,
+  functionSyntax    = "plainNames"
+)
+plot_distributions(mcSimulation_object = apple_sheep_mc_add,
+                   vars = c("NPV_Agroforestry_System", "NPV_Treeless_System", "NPV_decision"))
+```
+
+```{r question_mc_add, echo=FALSE}
+quiz(
+  question("Why does the extended model set apple_income[1:time_to_harvest] <- 0?",
+    answer("Because apple trees need several years to establish before producing fruit.", correct = TRUE),
+    answer("Because sheep income covers the apple income in early years.", correct = FALSE),
+    answer("To keep the total income equal across both systems.", correct = FALSE)
+  )
+)
+```
+
+---

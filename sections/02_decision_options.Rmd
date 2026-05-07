@@ -1,0 +1,13 @@
+## **2. Identifying Decision Options and Outcomes**
+
+**Activity:** Identify and list **decision options** and **outcomes of interest** from the perspective of decision-makers.
+
+```{r decision_options, echo=FALSE}
+textInput("decision_options", "List the decision options relevant to an agroecological problem:", placeholder="Example: Adopting agroforestry, expanding irrigation, switching to organic inputs...")
+```
+
+```{r decision_outcomes, echo=FALSE}
+textInput("decision_outcomes", "List the key outcomes of interest for decision-makers:", placeholder="Example: Yield improvement, biodiversity conservation, financial returns...")
+```
+
+---

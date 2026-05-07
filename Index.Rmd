@@ -1,0 +1,56 @@
+---
+title: "Decision Modeling for Agroecology"
+author: "Cory Whitney"
+date: "`r Sys.Date()`"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(decisionSupport)
+library(ggplot2)
+library(learnr)
+library(shiny)
+library(DiagrammeR)
+
+source("functions/monte_carlo.R")
+source("functions/monte_carlo_add.R")
+source("functions/apples_sheep_in_class.R")
+source("functions/apple_sheep_pareto.R")
+
+```
+
+```{r, child="sections/00_introduction.Rmd"}
+```
+
+```{r, child="sections/01_decision_modeling.Rmd"}
+```
+
+```{r, child="sections/02_decision_options.Rmd"}
+```
+
+```{r, child="sections/03_dags.Rmd"}
+```
+
+```{r, child="sections/04_monte_carlo_basic.Rmd"}
+```
+
+```{r, child="sections/05_decisionSupport.Rmd"}
+```
+
+```{r, child="sections/06_monte_carlo_reference.Rmd"}
+```
+
+```{r, child="sections/07_monte_carlo_add.Rmd"}
+```
+
+```{r, child="sections/08_pareto.Rmd"}
+```
+
+```{r, child="sections/09_next_steps.Rmd"}
+```
+
+```{r, child="sections/10_final_reflection.Rmd"}
+```

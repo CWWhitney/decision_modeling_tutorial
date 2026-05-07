@@ -1,0 +1,18 @@
+## **Introduction**
+
+Welcome to the interactive tutorial on **Decision Modeling for Agroecology & Conservation**. 
+This tutorial will guide you through:
+
+- **Theoretical foundations** of decision modeling 
+- **Identifying decision options and outcomes** 
+- **Structuring causal models** using Directed Acyclic Graphs (DAGs)
+- **Monte Carlo simulation** for decision-making
+- **Structured simulation** with `decisionSupport` and `mcSimulation`
+- **Expert-elicited probabilities** and model validation
+- **Pareto-optimality** (optional advanced topic)
+
+```{r question0, echo=FALSE}
+textInput("intro_question", "What do you already know about decision modeling?", placeholder="Write a short response...")
+```
+
+---

@@ -1,0 +1,288 @@
+## **Optional: Pareto-Optimality (Advanced)**
+
+Now we will calcualte Pareto-Optimality. We will use the concept of the Pareto front to find the best trade-offs between two competing objectives. We can learn which solutions are *optimal* (better in at least one way, without being worse in another) and which solutions are *dominated* (we could improve at least one objective without making the other worse).
+
+First we need to increase the model complexity a little by adding management options. We add stocking density (sheep per hectare), tree density (trees per hectare), proportion of tree area, and proportion of sheep area (1 - proportion_tree_area). *Adjust these numbers to reflect your best estimate.*
+
+```{r management_variables, exercise=TRUE}
+
+# Define management variables per hectare
+max_stocking_density <- 20  # Max sheep per ha before overgrazing effects occur
+stocking_density <- runif(num_simulations, min = 5, max = max_stocking_density)
+
+max_tree_density <- 500   # Maximum trees per hectare
+tree_density <- runif(num_simulations, min = 50, max = max_tree_density)
+
+# Define proportion of tree area vs. sheep area
+proportion_tree_area <- runif(num_simulations, min = 0.2, max = 0.8)
+proportion_sheep_area <- 1 - proportion_tree_area  # Remaining area for sheep
+```
+
+```{r management_variables-solution}
+
+# Define management variables per hectare
+max_stocking_density <- 40  # Max sheep per ha before overgrazing effects occur
+stocking_density <- runif(num_simulations, min = 5, max = max_stocking_density)
+
+max_tree_density <- 200   # Maximum trees per hectare
+tree_density <- runif(num_simulations, min = 50, max = max_tree_density)
+
+# Define proportion of tree area vs. sheep area
+proportion_tree_area <- runif(num_simulations, min = 0.2, max = 0.8)
+proportion_sheep_area <- 1 - proportion_tree_area  # Remaining area for sheep
+
+total_profits_agroforestry <- apple_profits + (sheep_profits * proportion_sheep_area)
+total_profits_treeless <- sheep_profits  # No tree component in treeless system
+```
+
+Adjust these biodiversity numbers to reflect your best estimate. For example, depending on the ecosystem, each tree likely adds far fewer species and each sheep likely has far less of a negative impact. 
+
+```{r biodiversity_variables, exercise=TRUE}
+
+# Define species richness and grazing impact factors per hectare
+species_richness_per_tree <- 0.05  # Each tree adds 0.05 species per ha
+species_loss_per_sheep <- 0.02  # Each sheep reduces 0.02 species per ha
+
+# Calculate biodiversity per ha
+tree_species_richness <- tree_density * species_richness_per_tree
+grazing_species_loss <- stocking_density * species_loss_per_sheep
+
+# Compute biodiversity outcomes per ha
+biodiversity_agroforestry <- tree_species_richness - grazing_species_loss
+biodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect
+
+# Calculate difference (decision impact of trees)
+# measures the financial difference when switching to trees
+total_profits <- total_profits_agroforestry - total_profits_treeless
+
+# Calculate difference (decision impact of trees on biodiversity)
+# measures the net gain/loss in biodiversity from switching to trees
+biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless
+
+# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
+biodiversity_value_per_species <- 500  # Assume each additional species is worth €500
+
+```
+
+```{r biodiversity_variables-solution}
+
+# Define species richness and grazing impact factors per hectare
+species_richness_per_tree <- 0.01  # Each tree adds 0.001 species per ha
+species_loss_per_sheep <- 0.001  # Each sheep reduces 0.001 species per ha
+
+# Calculate biodiversity per ha
+tree_species_richness <- tree_density * species_richness_per_tree
+grazing_species_loss <- stocking_density * species_loss_per_sheep
+
+# Compute biodiversity outcomes per ha
+biodiversity_agroforestry <- tree_species_richness - grazing_species_loss
+biodiversity_treeless <- -grazing_species_loss  # No trees, only grazing effect
+
+# Calculate difference (decision impact of trees)
+# measures the financial difference when switching to trees
+total_profits <- total_profits_agroforestry - total_profits_treeless
+
+# Calculate difference (decision impact of trees on biodiversity)
+# measures the net gain/loss in biodiversity from switching to trees
+biodiversity_impact <- biodiversity_agroforestry - biodiversity_treeless
+
+# Define a weighting factor for biodiversity impact (convert biodiversity into € equivalent)
+biodiversity_value_per_species <- 500  # Assume each additional species is worth €500
+
+
+```
+
+For the Pareto front plot we will first add the data together, store results in dataframe and plot a scatter plot. Change the color of the points in the scatter plot to green. 
+
+```{r results_data, exercise=TRUE}
+
+results <- data.frame(
+  total_profits,
+  biodiversity_impact
+)
+
+# Scatter plot
+plot(results$biodiversity_impact, results$total_profits,
+     col = "blue", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+```
+
+```{r results_data-solution}
+
+results <- data.frame(
+  total_profits,
+  biodiversity_impact
+)
+
+# Scatter plot
+plot(results$biodiversity_impact, results$total_profits,
+     col = "green", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+```
+
+Now that we see what the scatter plot looks like what is your impression? 
+
+```{r question3, echo=FALSE}
+textInput("pareto_question", "What do you expect the trade-offs to be between profit and biodiversity?", 
+          placeholder="Write your prediction before running the analysis...")
+```
+
+Now we can look for the non-dominated points where no other solution is better in both biodiversity and total profits. A point (biodiversity, profit) is Pareto-optimal if no other point has higher biodiversity and higher profits. Change the color of the points to blue.
+
+```{r pareto_points, exercise=TRUE}
+
+# Sort results by biodiversity impact
+results <- results[order(results$biodiversity_impact, decreasing = TRUE),]
+
+# Initialize Pareto front
+pareto_front <- results[1, ]  # Start with the first point
+
+# Loop through sorted results and keep only non-dominated points
+for (i in 2:nrow(results)) {
+  if (results$total_profits[i] > tail(pareto_front$total_profits, 1)) {
+    pareto_front <- rbind(pareto_front, results[i, ])
+  }
+}
+
+# Plot all points
+plot(results$biodiversity_impact, results$total_profits,
+     col = "green", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+
+# Highlight Pareto front points
+points(pareto_front$biodiversity_impact, pareto_front$total_profits,
+       col = "red", pch = 19, type = "o", lwd = 2)
+```
+
+```{r pareto_points-solution}
+
+# Sort results by biodiversity impact
+results <- results[order(results$biodiversity_impact, decreasing = TRUE),]
+
+# Initialize Pareto front
+pareto_front <- results[1, ]  # Start with the first point
+
+# Loop through sorted results and keep only non-dominated points
+for (i in 2:nrow(results)) {
+  if (results$total_profits[i] > tail(pareto_front$total_profits, 1)) {
+    pareto_front <- rbind(pareto_front, results[i, ])
+  }
+}
+
+# Plot all points
+plot(results$biodiversity_impact, results$total_profits,
+     col = "green", pch = 19, xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+
+# Highlight Pareto front points
+points(pareto_front$biodiversity_impact, pareto_front$total_profits,
+       col = "blue", pch = 19, type = "o", lwd = 2)
+```
+
+Now we can zoom in on the Pareto-optimal points and examine the conditions for key operational variables we calculated earlier.
+
+```{r pareto_conditions, exercise=TRUE}
+
+# Extract operational conditions for Pareto-optimal points
+pareto_conditions <- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &
+                               results$total_profits %in% pareto_front$total_profits,]
+
+# Merge with original dataset to include operational variables
+pareto_conditions <- merge(pareto_conditions, data.frame(
+  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),
+  by = c("biodiversity_impact", "total_profits"))
+
+# Show Pareto-optimal conditions
+print(pareto_conditions)
+```
+
+```{r pareto_conditions-solution}
+
+# Extract operational conditions for Pareto-optimal points
+pareto_conditions <- results[results$biodiversity_impact %in% pareto_front$biodiversity_impact &
+                               results$total_profits %in% pareto_front$total_profits,]
+
+# Merge with original dataset to include operational variables
+pareto_conditions <- merge(pareto_conditions, data.frame(
+  biodiversity_impact, total_profits, stocking_density, tree_density, proportion_tree_area),
+  by = c("biodiversity_impact", "total_profits"))
+
+# Show Pareto-optimal conditions
+print(pareto_conditions)
+```
+
+Finally we can plot the Pareto. Make the color of the points blue.
+
+```{r plot_pareto, exercise=TRUE}
+# Determine dynamic position based on plot coordinates
+text_positions <- ifelse(
+  pareto_front$biodiversity_impact > median(pareto_front$biodiversity_impact), 2, 4
+)
+
+# Adjust for very high or low points
+text_positions <- ifelse(
+  pareto_front$total_profits > quantile(pareto_front$total_profits, 0.75), 1, text_positions
+)
+text_positions <- ifelse(
+  pareto_front$total_profits < quantile(pareto_front$total_profits, 0.25), 3, text_positions
+)
+
+# Plot Pareto front
+plot(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     col = "red", pch = 19, type = "o", lwd = 2,
+     xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+
+# Add footnote at the bottom
+mtext("S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area", 
+      side = 1, line = 4, cex = 0.8)
+
+# Create multi-line labels with line breaks
+labels <- paste0("S:", round(pareto_conditions$stocking_density, 1), "\n",
+                 "T:", round(pareto_conditions$tree_density, 1), "\n",
+                 "P:", round(pareto_conditions$proportion_tree_area, 2))
+
+# Annotate with dynamically positioned text
+text(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     labels = labels, pos = text_positions, cex = 0.8)
+```
+
+```{r plot_pareto-solution}
+# Determine dynamic position based on plot coordinates
+text_positions <- ifelse(
+  pareto_front$biodiversity_impact > median(pareto_front$biodiversity_impact), 2, 4
+)
+
+# Adjust for very high or low points
+text_positions <- ifelse(
+  pareto_front$total_profits > quantile(pareto_front$total_profits, 0.75), 1, text_positions
+)
+text_positions <- ifelse(
+  pareto_front$total_profits < quantile(pareto_front$total_profits, 0.25), 3, text_positions
+)
+
+# Plot Pareto front
+plot(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     col = "blue", pch = 19, type = "o", lwd = 2,
+     xlab = "Biodiversity Impact (Species Change per ha)",
+     ylab = "Total Profits (€ per ha)", main = "Pareto Front: Agroforestry vs. Treeless System")
+
+# Add footnote at the bottom
+mtext("S = Stocking Density (sheep/ha), T = Tree Density (trees/ha), P = Proportion of Tree Area", 
+      side = 1, line = 4, cex = 0.8)
+
+# Create multi-line labels with line breaks
+labels <- paste0("S:", round(pareto_conditions$stocking_density, 1), "\n",
+                 "T:", round(pareto_conditions$tree_density, 1), "\n",
+                 "P:", round(pareto_conditions$proportion_tree_area, 2))
+
+# Annotate with dynamically positioned text
+text(pareto_front$biodiversity_impact, pareto_front$total_profits,
+     labels = labels, pos = text_positions, cex = 0.8)
+```
+
+```{r question4, echo=FALSE}
+textInput("pareto_reflection", "What did you observe in the Pareto front?")
+```
+
+---
